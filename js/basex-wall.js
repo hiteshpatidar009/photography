@@ -368,6 +368,26 @@ $(function() {
     swiper.on("slideChangeTransitionEnd", function() {
         $(".slider-progress-bar").addClass("slider-active");
     });
+
+    // 12. image hover swap - auto convert -2 to color
+    $(".hover-element").hover(
+        function() {
+            var $img = $(this).find("img");
+            var src = $img.attr("src");
+            if (src.indexOf("-2.") !== -1) {
+                var colorSrc = src.replace("-2.jpg", ".jpg").replace("-2.JPG", ".JPG");
+                $img.attr("src", colorSrc);
+            }
+        },
+        function() {
+            var $img = $(this).find("img");
+            var src = $img.attr("src");
+            if (src.indexOf("-2.") === -1) {
+                var bwSrc = src.replace(".jpg", "-2.jpg").replace(".JPG", "-2.JPG");
+                $img.attr("src", bwSrc);
+            }
+        }
+    );
     var playButton = $(".swiper-slide-controls-play-pause-wrapper");
     function autoEnd() {
         playButton.removeClass("slider-on-off");
@@ -609,80 +629,23 @@ window.addEvent("domready", function() {
                     var firstSlide = true;
                     items[i].node.addEvents({
                         mouseenter: function(event) {
+                            // Swap to color image
+                            var currentSrc = img.src;
+                            if (currentSrc.indexOf('-2.') !== -1) {
+                                var colorSrc = currentSrc.replace('-2.jpg', '.jpg').replace('-2.JPG', '.JPG');
+                                img.src = colorSrc;
+                            }
                             try { img.style.filter = 'grayscale(0%)'; img.style.webkitFilter = 'grayscale(0%)'; } catch (e) {}
-                            
-                            // Special handling for first image - show img1.jpg on hover
-                            if (position === 0 && imagewall[position][1][0][0] === "img/heroimgs/img1.jpg") {
-                                var hoverImg = new Element('img', { 
-                                    src: "img/heroimgs/img1.jpg",
-                                    styles: {
-                                        width: '100%',
-                                        height: '100%',
-                                        'object-fit': 'cover',
-                                        position: 'absolute',
-                                        top: 0,
-                                        left: 0,
-                                        'z-index': 10,
-                                        filter: 'none',
-                                        '-webkit-filter': 'none'
-                                    }
-                                });
-                                hoverImg.inject(items[i].node);
-                                img.fade("out");
-                                return false;
-                            }
-                            
-                            list.getChildren("li").setStyles({
-                                "visibility": "hidden",
-                                "opacity": 0
-                            });
-                            stop = false;
-                            if (imagewall[position][1].length) {
-                                (function(item) {
-                                    item.fade("in");
-                                    if (firstSlide) {
-                                        delay = 1000;
-                                        firstSlide = false;
-                                    } else {
-                                        delay = 2000;
-                                    }
-                                    if (item.getNext("li") != null) {
-                                        var tmpslide = arguments.callee;
-                                        (function() {
-                                            item.fade("out");
-                                            if (!stop) tmpslide(item.getNext("li"));
-                                        }).delay(delay);
-                                    } else if (item.getSiblings("li").length > 0) {
-                                        var tmpslide = arguments.callee;
-                                        (function() {
-                                            item.fade("out");
-                                            if (!stop) tmpslide(item.getSiblings("li").pop());
-                                        }).delay(delay);
-                                    }
-                                })(new Element(list.getFirst("li")));
-                                img.fade("out");
-                            }
                             return false;
                         },
                         mouseleave: function() {
+                            // Swap back to B&W image
+                            var currentSrc = img.src;
+                            if (currentSrc.indexOf('-2.') === -1) {
+                                var bwSrc = currentSrc.replace('.jpg', '-2.jpg').replace('.JPG', '-2.JPG');
+                                img.src = bwSrc;
+                            }
                             try { img.style.filter = 'grayscale(100%)'; img.style.webkitFilter = 'grayscale(100%)'; } catch (e) {}
-                            
-                            // Remove hover image for first position
-                            if (position === 0) {
-                                var hoverImgs = items[i].node.getElements('img');
-                                if (hoverImgs.length > 1) {
-                                    hoverImgs[hoverImgs.length - 1].destroy();
-                                }
-                                img.fade("in");
-                                return false;
-                            }
-                            
-                            stop = true;
-                            firstSlide = true;
-                            if (imagewall[position][1].length) {
-                                list.getChildren("li").fade("out");
-                                img.fade("in");
-                            }
                         }
                     });
                     i++;
