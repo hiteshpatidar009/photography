@@ -129,31 +129,31 @@ background-image: url(../img/heroimgs/img1.jpg);
 }
 
 .item-works-02 {
-background-image: url(../img/heroimgs/img14.jpg);
+background-image: url(../img/heroimgs/img3.JPG);
 }
 
 .item-works-03 {
-background-image: url(../img/heroimgs/img3.jpg);
+background-image: url(../img/heroimgs/img4.JPG);
 }
 
 .item-works-04 {
-background-image: url(../img/heroimgs/img4.jpg);
+background-image: url(../img/heroimgs/img5.JPG);
 }
 
 .item-works-05 {
-background-image: url(../img/heroimgs/img5.jpg);
+background-image: url(../img/heroimgs/img6.JPG);
 }
 
 .item-works-06 {
-background-image: url(../img/heroimgs/img6.jpg);
-}
-
-.item-works-07 {
 background-image: url(../img/heroimgs/img7.jpg);
 }
 
-.item-works-08 {
+.item-works-07 {
 background-image: url(../img/heroimgs/img8.jpg);
+}
+
+.item-works-08 {
+background-image: url(../img/heroimgs/img9.jpg);
 }
 
 .item-works-09 {
@@ -1788,19 +1788,15 @@ padding: 2.5px;
 
 .more-wraper:hover .more-button-circle,
 .more-wraper-center:hover .more-button-circle {
--webkit-animation: spin 5s linear infinite;
-   -moz-animation: spin 5s linear infinite;
-    -ms-animation: spin 5s linear infinite;
-     -o-animation: spin 5s linear infinite;
-        animation: spin 5s linear infinite;
+/* Rotation animation removed */
 }
 
 .more-wraper-center:hover {
--webkit-transform: scale(0.9);
-   -moz-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-     -o-transform: scale(0.9);
-        transform: scale(0.9);
+-webkit-transform: scale(1.1);
+   -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+     -o-transform: scale(1.1);
+        transform: scale(1.1);
 -webkit-transition: all 0.3s ease;
    -moz-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
@@ -1828,6 +1824,7 @@ letter-spacing: normal;
 margin: 0;
 line-height: 120px;
 display: block;
+transition: transform 0.3s ease;
 }
 
 .more-button-txt-center span {
@@ -4662,7 +4659,7 @@ visibility: hidden!important;
 #works .col-md-3 .more-button-txt-center {
   font-size: 10px;
   top: 40px;
-  left: 40px;
+  left: 60px;
 }
 
 /* Custom styling for divider after post-title in about section */
@@ -4684,3 +4681,20 @@ margin-top: -5rem;
   -webkit-filter: grayscale(0%);
 }
 
+/* PhotoSwipe image centering fix */
+.pswp__zoom-wrap {
+display: flex !important;
+align-items: center !important;
+justify-content: center !important;
+transform: translate3d(0, 0, 0) scale(1) !important;
+width: 100% !important;
+height: 100% !important;
+}
+
+.pswp__img {
+position: static !important;
+transform: none !important;
+margin: 0 !important;
+max-width: 100% !important;
+max-height: 100% !important;
+}

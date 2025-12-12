@@ -1,0 +1,17 @@
+SUPER SIMPLE - ADD NEW IMAGES
+=============================
+
+STEP 1: Put your images here
+   → Open the "new-images" folder
+   → Copy your image files into it
+
+STEP 2: Double-click this file
+   → add-image.sh
+
+That's it! Your images are added automatically.
+
+EXAMPLE:
+- You have: photo1.jpg, photo2.jpg
+- Put them in "new-images" folder  
+- Double-click "add-image.sh"
+- Done! They become img14.jpg, img15.jpg in your site

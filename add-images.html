@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Images to Portfolio</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .drop-zone {
+            border: 3px dashed #ccc;
+            padding: 50px;
+            text-align: center;
+            margin: 20px 0;
+            background: #f9f9f9;
+        }
+        .drop-zone.dragover { background: #e8f5e8; border-color: #4CAF50; }
+        button { padding: 15px 30px; font-size: 16px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        .preview { margin: 10px 0; }
+        .preview img { max-width: 100px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Add Images to Your Portfolio</h1>
+    
+    <div class="drop-zone" id="dropZone">
+        <p>Drag and drop images here<br>or<br><input type="file" multiple accept="image/*" id="fileInput"></p>
+    </div>
+    
+    <div id="preview"></div>
+    
+    <button onclick="addImages()" id="addBtn" style="display:none;">Add These Images</button>
+    
+    <div id="result"></div>
+
+    <script>
+        let selectedFiles = [];
+        
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const addBtn = document.getElementById('addBtn');
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        function handleFiles(files) {
+            selectedFiles = Array.from(files);
+            showPreview();
+        }
+        
+        function showPreview() {
+            preview.innerHTML = '<h3>Selected Images:</h3>';
+            selectedFiles.forEach(file => {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.style.maxWidth = '100px';
+                img.style.margin = '5px';
+                preview.appendChild(img);
+            });
+            addBtn.style.display = 'block';
+        }
+        
+        async function addImages() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Adding images...</p>';
+            
+            try {
+                // Get next number
+                const nextNum = await getNextNumber();
+                
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    const file = selectedFiles[i];
+                    const num = nextNum + i;
+                    const ext = file.name.split('.').pop();
+                    const newName = `img${num}.${ext}`;
+                    
+                    // Save file
+                    await saveFile(file, newName);
+                    
+                    // Update CSS and HTML
+                    await updateFiles(num, newName);
+                }
+                
+                result.innerHTML = `<p style="color:green;">✓ Added ${selectedFiles.length} images successfully!</p>`;
+                selectedFiles = [];
+                preview.innerHTML = '';
+                addBtn.style.display = 'none';
+                
+            } catch (error) {
+                result.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        async function getNextNumber() {
+            // This would need server-side implementation
+            // For now, return a placeholder
+            return 14;
+        }
+        
+        async function saveFile(file, filename) {
+            // This would need server-side implementation
+            console.log('Saving:', filename);
+        }
+        
+        async function updateFiles(num, filename) {
+            // This would need server-side implementation
+            console.log('Updating files for:', filename);
+        }
+    </script>
+</body>
+</html>

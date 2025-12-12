@@ -1,0 +1,27 @@
+HOW TO ADD NEW IMAGES - SIMPLE STEPS
+=====================================
+
+1. Put your new image files in the "new-images" folder
+   (The script will create this folder for you on first run)
+
+2. Run the script:
+   ./add-image.sh
+   
+   OR
+   
+   python3 add-image.py
+
+3. That's it! Your images are now added to:
+   - The heroimgs folder (with proper naming)
+   - The CSS file (background images)
+   - The HTML file (both grid and carousel sections)
+
+SUPPORTED FORMATS: .jpg, .jpeg, .png
+
+The script automatically:
+- Finds the next available number (img14, img15, etc.)
+- Copies your images to the right folder
+- Updates all the code files
+- Keeps everything organized
+
+Just drop images and run the script!
