@@ -65,12 +65,12 @@ $(function() {
             $(".to-top-arrow").addClass("show");
 			$(".round-menu").addClass("direction");
 			$(".round-menu").addClass("round-menu-no-bg");
-			$(".logo").addClass("off");
+			$(".logo").css("filter", "brightness(0)");
         } else {
             $(".to-top-arrow").removeClass("show");
 			$(".round-menu").removeClass("direction");
 			$(".round-menu").removeClass("round-menu-no-bg");
-			$(".logo").removeClass("off");
+			$(".logo").css("filter", "none");
         }
     });
 	
@@ -553,7 +553,7 @@ window.addEvent("domready", function() {
             ["the-wall/5-2.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
         ]]
     ];
-    var maxLength = 36;
+    var maxLength = imagewall.length;
     var wallFluid = new Wall("wall", {
         "draggable": true,
 		"slideshow": true, // options: true, false
@@ -573,8 +573,8 @@ window.addEvent("domready", function() {
             (function() {
                 try {
                     var position = ((Math.abs(items[i].y) % root) * root) + (Math.abs(items[i].x) % root);
-                    if (position > maxLength) {
-                        position = Math.floor(Math.random() * maxLength);
+                    if (position >= imagewall.length) {
+                        position = position % imagewall.length;
                     }
                     var file = imagewall[position][0];
                     // if main file is empty, fallback to the first slideshow image (if present)
@@ -582,6 +582,18 @@ window.addEvent("domready", function() {
                         if (imagewall[position][1] && imagewall[position][1].length && imagewall[position][1][0][0]) {
                             file = imagewall[position][1][0][0];
                         }
+                    }
+                    // Hide empty tiles
+                    if (!file || file === "") {
+                        items[i].node.setStyle('display', 'none');
+                        i++;
+                        if (i < items.length) {
+                            var tmp = arguments.callee;
+                            (function() {
+                                tmp();
+                            }).delay(10);
+                        }
+                        return;
                     }
                     // create image element safely and force it to fit the card
                     var img = new Element('img', { src: file });
