@@ -77,7 +77,7 @@ def add_to_css(num, filename):
         f.write(content)
 
 def add_to_html(num, filename):
-    html_file = "index-WALL-IMAGE-LIGHT-2.html"
+    html_file = "index.html"
     
     with open(html_file, 'r') as f:
         content = f.read()
