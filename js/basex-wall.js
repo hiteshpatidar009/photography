@@ -445,123 +445,123 @@ $(function() {
 // 11. the Wall
 window.addEvent("domready", function() {
     var imagewall = [
-        ["img/heroimgs/img1-2.jpg", [
-            ["img/heroimgs/img1.jpg", "Photography<br \/>\r\nFashion"]
+        ["img/heroimgs/web/img1.jpg", [
+            ["img/heroimgs/web/img1.jpg", "Photography<br \/>\r\nFashion"]
         ]],
-        ["img/heroimgs/img3-2.JPG", [
-            ["the-wall/4-2.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
+        ["img/heroimgs/web/img3.jpg", [
+            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
         ]],
-        ["img/heroimgs/img4-2.JPG", [
-            ["the-wall/3-2.jpg", "Item Name<br \/>\r\nLife / Stories"]
+        ["img/heroimgs/web/img4.jpg", [
+            ["the-wall/3.jpg", "Item Name<br \/>\r\nLife / Stories"]
         ]],
-        ["img/heroimgs/img5-2.JPG", [
-            ["the-wall/4-2.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
+        ["img/heroimgs/web/img5.jpg", [
+            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
         ]],
-        ["img/heroimgs/img6-2.JPG", [
-            ["the-wall/5-2.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
+        ["img/heroimgs/web/img6.jpg", [
+            ["the-wall/5.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
         ]],
-        ["img/heroimgs/img7-2.jpg", [
-            ["the-wall/6-2.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
+        ["img/heroimgs/web/img7.jpg", [
+            ["the-wall/6.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
         ]],
-        ["img/heroimgs/img8-2.jpg", [
-            ["the-wall/7-2.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
+        ["img/heroimgs/web/img8.jpg", [
+            ["the-wall/7.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
         ]],
-        ["img/heroimgs/img9-2.jpg", [
-            ["the-wall/8-2.jpg", "Item Name<br \/>\r\nLife / Stories"]
+        ["img/heroimgs/web/img9.jpg", [
+            ["the-wall/8.jpg", "Item Name<br \/>\r\nLife / Stories"]
         ]],
-        ["img/heroimgs/img10-2.jpg", [
-            ["the-wall/9-2.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
+        ["img/heroimgs/web/img10.jpg", [
+            ["the-wall/9.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
         ]],
-        ["img/heroimgs/img11-2.jpg", [
-            ["the-wall/10-2.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
+        ["img/heroimgs/web/img11.jpg", [
+            ["the-wall/10.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
         ]],
-        ["img/heroimgs/img12-2.jpg", [
-            ["the-wall/11-2.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
+        ["img/heroimgs/web/img12.jpg", [
+            ["the-wall/11.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
         ]],
-        ["img/heroimgs/img13-2.jpg", [
-            ["the-wall/12-2.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
+        ["img/heroimgs/web/img13.jpg", [
+            ["the-wall/12.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
         ]],
-        ["img/heroimgs/img14-2.jpg", [
-            ["img/heroimgs/img14-2.jpg", "Item Name<br \/>\r\nLife / Stories"],
+        ["img/heroimgs/web/img14.jpg", [
+            ["img/heroimgs/web/img14.jpg", "Item Name<br \/>\r\nLife / Stories"],
             ["the-wall/13-3.jpg", "Item Name 2<br \/>\r\nLife / Stories"],
             ["the-wall/13-4.jpg", "Item Name 3<br \/>\r\nLife / Stories"]
         ]],
-        ["img/heroimgs/img15-2.jpg", [
-            ["the-wall/14-2.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
+        ["img/heroimgs/web/img15.jpg", [
+            ["the-wall/14.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
         ]],
-        ["img/heroimgs/img16-2.jpg", [
-            ["the-wall/15-2.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
+        ["img/heroimgs/web/img16.jpg", [
+            ["the-wall/15.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
         ]],
         // Repeat cycle starts
-        ["img/heroimgs/img1-2.jpg", [
-            ["img/heroimgs/img1.jpg", "Photography<br \/>\r\nFashion"]
+        ["img/heroimgs/web/img1.jpg", [
+            ["img/heroimgs/web/img1.jpg", "Photography<br \/>\r\nFashion"]
         ]],
-        ["img/heroimgs/img3-2.JPG", [
-            ["the-wall/4-2.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
+        ["img/heroimgs/web/img3.jpg", [
+            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
         ]],
-        ["img/heroimgs/img4-2.JPG", [
-            ["the-wall/3-2.jpg", "Item Name<br \/>\r\nLife / Stories"]
+        ["img/heroimgs/web/img4.jpg", [
+            ["the-wall/3.jpg", "Item Name<br \/>\r\nLife / Stories"]
         ]],
-        ["img/heroimgs/img5-2.JPG", [
-            ["the-wall/4-2.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
+        ["img/heroimgs/web/img5.jpg", [
+            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
         ]],
-        ["img/heroimgs/img6-2.JPG", [
-            ["the-wall/5-2.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
+        ["img/heroimgs/web/img6.jpg", [
+            ["the-wall/5.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
         ]],
-        ["img/heroimgs/img7-2.jpg", [
-            ["the-wall/6-2.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
+        ["img/heroimgs/web/img7.jpg", [
+            ["the-wall/6.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
         ]],
-        ["img/heroimgs/img8-2.jpg", [
-            ["the-wall/7-2.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
+        ["img/heroimgs/web/img8.jpg", [
+            ["the-wall/7.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
         ]],
-        ["img/heroimgs/img9-2.jpg", [
-            ["the-wall/8-2.jpg", "Item Name<br \/>\r\nLife / Stories"]
+        ["img/heroimgs/web/img9.jpg", [
+            ["the-wall/8.jpg", "Item Name<br \/>\r\nLife / Stories"]
         ]],
-        ["img/heroimgs/img10-2.jpg", [
-            ["the-wall/9-2.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
+        ["img/heroimgs/web/img10.jpg", [
+            ["the-wall/9.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
         ]],
-        ["img/heroimgs/img11-2.jpg", [
-            ["the-wall/10-2.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
+        ["img/heroimgs/web/img11.jpg", [
+            ["the-wall/10.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
         ]],
-        ["img/heroimgs/img12-2.jpg", [
-            ["the-wall/11-2.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
+        ["img/heroimgs/web/img12.jpg", [
+            ["the-wall/11.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
         ]],
-        ["img/heroimgs/img13-2.jpg", [
-            ["the-wall/12-2.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
+        ["img/heroimgs/web/img13.jpg", [
+            ["the-wall/12.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
         ]],
-        ["img/heroimgs/img14-2.jpg", [
-            ["img/heroimgs/img14-2.jpg", "Item Name<br \/>\r\nLife / Stories"],
+        ["img/heroimgs/web/img14.jpg", [
+            ["img/heroimgs/web/img14.jpg", "Item Name<br \/>\r\nLife / Stories"],
             ["the-wall/13-3.jpg", "Item Name 2<br \/>\r\nLife / Stories"],
             ["the-wall/13-4.jpg", "Item Name 3<br \/>\r\nLife / Stories"]
         ]],
-        ["img/heroimgs/img15-2.jpg", [
-            ["the-wall/14-2.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
+        ["img/heroimgs/web/img15.jpg", [
+            ["the-wall/14.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
         ]],
-        ["img/heroimgs/img1-2.jpg", [
-            ["img/heroimgs/img1.jpg", "Photography<br \/>\r\nFashion"]
+        ["img/heroimgs/web/img1.jpg", [
+            ["img/heroimgs/web/img1.jpg", "Photography<br \/>\r\nFashion"]
         ]],
-        ["img/heroimgs/img3-2.JPG", [
-            ["the-wall/4-2.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
+        ["img/heroimgs/web/img3.jpg", [
+            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
         ]],
-        ["img/heroimgs/img4-2.JPG", [
-            ["the-wall/3-2.jpg", "Item Name<br \/>\r\nLife / Stories"]
+        ["img/heroimgs/web/img4.jpg", [
+            ["the-wall/3.jpg", "Item Name<br \/>\r\nLife / Stories"]
         ]],
-        ["img/heroimgs/img5-2.JPG", [
-            ["the-wall/4-2.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
+        ["img/heroimgs/web/img5.jpg", [
+            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
         ]],
-        ["img/heroimgs/img6-2.JPG", [
-            ["the-wall/5-2.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
+        ["img/heroimgs/web/img6.jpg", [
+            ["the-wall/5.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
         ]]
     ];
     var maxLength = imagewall.length;
     var wallFluid = new Wall("wall", {
         "draggable": true,
-		"slideshow": true, // options: true, false
+		"slideshow": false, // continuous drift below replaces the tile-by-tile slideshow
         "speed": 1000,
         "showDuration": 4000,
         "transition": Fx.Transitions.Quad.easeOut,
         "inertia": true,
-        "autoposition": true,
+        "autoposition": false,
         "width": 301,
         "height": 320,
         "rangex": [-100, 100],
@@ -612,13 +612,6 @@ window.addEvent("domready", function() {
                         // add it via style property if available
                         try { img.style.objectFit = 'cover'; } catch (e) {}
                     } catch (e) {}
-                    // ensure image is grayscale by default and has a smooth transition to color
-                    try {
-                        img.style.filter = 'grayscale(100%)';
-                        img.style.webkitFilter = 'grayscale(100%)';
-                        img.style.transition = 'filter 0.5s ease';
-                        img.style.webkitTransition = '-webkit-filter 0.5s ease';
-                    } catch (e) {}
                     img.inject(items[i].node).fade("hide").fade("in");
                     var list = new Element("ul");
                     list.setProperty("class", "slideshow")
@@ -637,29 +630,6 @@ window.addEvent("domready", function() {
                         slide.inject(list);
                     }
                     list.inject(items[i].node);
-                    var stop = false;
-                    var firstSlide = true;
-                    items[i].node.addEvents({
-                        mouseenter: function(event) {
-                            // Swap to color image
-                            var currentSrc = img.src;
-                            if (currentSrc.indexOf('-2.') !== -1) {
-                                var colorSrc = currentSrc.replace('-2.jpg', '.jpg').replace('-2.JPG', '.JPG');
-                                img.src = colorSrc;
-                            }
-                            try { img.style.filter = 'grayscale(0%)'; img.style.webkitFilter = 'grayscale(0%)'; } catch (e) {}
-                            return false;
-                        },
-                        mouseleave: function() {
-                            // Swap back to B&W image
-                            var currentSrc = img.src;
-                            if (currentSrc.indexOf('-2.') === -1) {
-                                var bwSrc = currentSrc.replace('.jpg', '-2.jpg').replace('.JPG', '-2.JPG');
-                                img.src = bwSrc;
-                            }
-                            try { img.style.filter = 'grayscale(100%)'; img.style.webkitFilter = 'grayscale(100%)'; } catch (e) {}
-                        }
-                    });
                     i++;
                     if (i < items.length) {
                         var tmp = arguments.callee;
@@ -673,5 +643,58 @@ window.addEvent("domready", function() {
     });
     window.setTimeout(function() {
         wallFluid.initWall();
+        startWallDrift();
     }, 500);
+
+    // continuous smooth drift of the wall (pauses while the user drags it)
+    function startWallDrift() {
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var wallEl = document.getElementById("wall");
+        if (!wallEl) return;
+        var vx = -24, vy = -12; // px per second
+        var x = parseFloat(wallEl.style.left) || 0;
+        var y = parseFloat(wallEl.style.top) || 0;
+        var pausedUntil = 0;
+        var dragging = false;
+        var last = null;
+        function pause() {
+            dragging = true;
+        }
+        function resume() {
+            if (!dragging) return;
+            dragging = false;
+            // let the drag inertia settle before drifting again
+            pausedUntil = Date.now() + 1500;
+        }
+        wallEl.addEventListener("mousedown", pause);
+        wallEl.addEventListener("touchstart", pause, { passive: true });
+        window.addEventListener("mouseup", resume);
+        window.addEventListener("touchend", resume);
+        function step(now) {
+            var dt = last === null ? 0 : Math.min((now - last) / 1000, 0.1);
+            last = now;
+            if (dragging || Date.now() < pausedUntil) {
+                // pick up from wherever the user left the wall
+                x = parseFloat(wallEl.style.left) || 0;
+                y = parseFloat(wallEl.style.top) || 0;
+            } else {
+                x += vx * dt;
+                y += vy * dt;
+                if (x <= wallFluid.minx || x >= wallFluid.maxx) {
+                    vx = -vx;
+                    x = Math.min(Math.max(x, wallFluid.minx), wallFluid.maxx);
+                }
+                if (y <= wallFluid.miny || y >= wallFluid.maxy) {
+                    vy = -vy;
+                    y = Math.min(Math.max(y, wallFluid.miny), wallFluid.maxy);
+                }
+                wallEl.style.left = x + "px";
+                wallEl.style.top = y + "px";
+                var newTiles = wallFluid.updateWall();
+                if (newTiles.length) wallFluid.options.callOnUpdate(newTiles);
+            }
+            window.requestAnimationFrame(step);
+        }
+        window.requestAnimationFrame(step);
+    }
 });

@@ -109,7 +109,7 @@ background-image: url(../img/team/4.jpg);
 
 /* 1.4. about parallax IMG BACKGROUND */
 .parallax-years {
-background-image: url(../img/heroimgs/img9.jpg);
+background-image: url(../img/heroimgs/large/img9.jpg);
 }
 
 
@@ -125,51 +125,51 @@ background-image: url(../img/facts/2.jpg);
 
 /* 1.6. works IMG BACKGROUND */
 .item-works-01 {
-background-image: url(../img/heroimgs/img1.jpg);
+background-image: url(../img/heroimgs/web/img1.jpg);
 }
 
 .item-works-02 {
-background-image: url(../img/heroimgs/img3.JPG);
+background-image: url(../img/heroimgs/web/img3.jpg);
 }
 
 .item-works-03 {
-background-image: url(../img/heroimgs/img4.JPG);
+background-image: url(../img/heroimgs/web/img4.jpg);
 }
 
 .item-works-04 {
-background-image: url(../img/heroimgs/img5.JPG);
+background-image: url(../img/heroimgs/web/img5.jpg);
 }
 
 .item-works-05 {
-background-image: url(../img/heroimgs/img6.JPG);
+background-image: url(../img/heroimgs/web/img6.jpg);
 }
 
 .item-works-06 {
-background-image: url(../img/heroimgs/img7.jpg);
+background-image: url(../img/heroimgs/web/img7.jpg);
 }
 
 .item-works-07 {
-background-image: url(../img/heroimgs/img8.jpg);
+background-image: url(../img/heroimgs/web/img8.jpg);
 }
 
 .item-works-08 {
-background-image: url(../img/heroimgs/img9.jpg);
+background-image: url(../img/heroimgs/web/img9.jpg);
 }
 
 .item-works-09 {
-background-image: url(../img/heroimgs/img10.jpg);
+background-image: url(../img/heroimgs/web/img10.jpg);
 }
 
 .item-works-10 {
-background-image: url(../img/heroimgs/img11.jpg);
+background-image: url(../img/heroimgs/web/img11.jpg);
 }
 
 .item-works-11 {
-background-image: url(../img/heroimgs/img12.jpg);
+background-image: url(../img/heroimgs/web/img12.jpg);
 }
 
 .item-works-12 {
-background-image: url(../img/heroimgs/img13.jpg);
+background-image: url(../img/heroimgs/web/img13.jpg);
 }
 
 
@@ -469,6 +469,52 @@ background: #111;
 #preloader-status {
 display: table-cell;
 vertical-align: middle;
+}
+
+/* logo is white, so show it dark on the light loading screen */
+.preloader-logo {
+width: 200px;
+height: 93px;
+margin: 0 auto 30px;
+background: url(../img/Logo-web.png) no-repeat center;
+background-size: contain;
+-webkit-filter: invert(1);
+        filter: invert(1);
+-webkit-animation: preloader-logo-in 0.8s ease both;
+        animation: preloader-logo-in 0.8s ease both;
+}
+
+body.body-dark .preloader-logo {
+-webkit-filter: none;
+        filter: none;
+}
+
+@media only screen and (max-width: 880px) {
+  .preloader-logo {
+    width: 160px;
+    height: 74px;
+  }
+}
+
+@-webkit-keyframes preloader-logo-in {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
+@keyframes preloader-logo-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .preloader-position {
@@ -1215,7 +1261,7 @@ top: 50px;
 left: 50px;
 width: 100px;
 height: 60px;
-background: url(../img/Logo.png) no-repeat;
+background: url(../img/Logo-web.png) no-repeat;
 background-size: contain;
         opacity: 1;
    -moz-opacity: 1;
@@ -1249,10 +1295,6 @@ display: block;
 width: 160px;
 height: 100px;
 line-height: 54px;
-}
-
-.logo .logo-img::before {
-background: url(../img/Logo.png) no-repeat;
 }
 
 .logo.off {
@@ -4667,18 +4709,15 @@ visibility: hidden!important;
 margin-top: -5rem;
 }
 
-/* Wall images: show grayscale by default and reveal color on hover */
+/* Hero wall drifts continuously; keep it on its own layer */
+#wall {
+  will-change: left, top;
+}
+
+/* Wall images: fill the item */
 #wall .wall-item img,
 .wall-item img {
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
-  transition: filter 0.5s ease, -webkit-filter 0.5s ease;
   object-fit: cover;
-}
-#wall .wall-item:hover img,
-.wall-item:hover img {
-  filter: grayscale(0%);
-  -webkit-filter: grayscale(0%);
 }
 
 /* PhotoSwipe image centering fix */

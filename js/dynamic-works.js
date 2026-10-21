@@ -32,12 +32,17 @@ const imageList = [
 let currentPage = 0;
 const imagesPerPage = 12;
 
+// Resized copies made by optimize-images.py: 'web' for thumbnails, 'large' for the full-screen viewer
+function sizedSrc(src, size) {
+    return src.replace(/\/([^\/]+)\.(jpe?g|png)$/i, `/${size}/$1.jpg`);
+}
+
 // Generate dynamic CSS for background images
 function generateDynamicCSS() {
     let css = '';
     imageList.forEach((item, index) => {
         const itemNumber = String(index + 1).padStart(2, '0');
-        css += `.item-works-${itemNumber} { background-image: url(${item.src}); }\n`;
+        css += `.item-works-${itemNumber} { background-image: url(${sizedSrc(item.src, 'web')}); }\n`;
     });
     
     const style = document.createElement('style');
@@ -76,7 +81,7 @@ function generateWorksGrid() {
                             <div class="center-container">
                                 <div class="center-block">
                                     <div class="more-wraper-center item-folio">
-                                        <a class="thumb-link" data-size="1920x1280" href="${item.src}">
+                                        <a class="thumb-link" data-size="1920x1280" href="${sizedSrc(item.src, 'large')}">
                                             <div class="more-button-bg-center more-button-circle"></div>
                                             <div class="more-button-txt-center">
                                                 <span>View</span>
@@ -115,7 +120,7 @@ function generateCarousel() {
                 <div class="center-container">
                     <div class="center-block">
                         <div class="more-wraper-center item-folio">
-                            <a class="thumb-link" data-size="1920x1280" href="${item.src}">
+                            <a class="thumb-link" data-size="1920x1280" href="${sizedSrc(item.src, 'large')}">
                                 <div class="more-button-bg-center more-button-circle"></div>
                                 <div class="more-button-txt-center">
                                     <span>View</span>
