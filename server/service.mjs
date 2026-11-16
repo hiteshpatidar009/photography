@@ -159,7 +159,8 @@ export default {
         if (request.method === 'OPTIONS') return new Response(null, {status: 204});
         let response;
         try {
-            requireValue(env.FIREBASE_PROJECT_ID && env.FIREBASE_API_KEY && env.FIREBASE_CLIENT_EMAIL && env.FIREBASE_PRIVATE_KEY, 'Service is not configured yet.', 503);
+            const missing = ['FIREBASE_PROJECT_ID', 'FIREBASE_API_KEY', 'FIREBASE_CLIENT_EMAIL', 'FIREBASE_PRIVATE_KEY'].filter(key => !env[key]?.trim());
+            requireValue(!missing.length, 'Server setup incomplete: ' + missing.join(', ') + '. Add these in .env for local development, or Vercel Environment Variables for the hosted site, then restart or redeploy.', 503);
             response = await route(request, env);
         } catch (error) {
             response = json({error: error.status ? error.message : 'Service temporarily unavailable. Please retry.'}, error.status || 503);

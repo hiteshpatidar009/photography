@@ -19,6 +19,14 @@ test('production denies anonymous mutations, unverified accounts and unauthorize
     assert.equal((await call('/me',{token:'unverified'})).status,403);
     const response=await service.fetch(new Request('https://api.test/public',{headers:{Origin:'https://evil.test'}}),env);assert.equal(response.status,403);
 });
+test('missing server credentials explain setup without leaking configured secrets',async()=>{
+    const response=await service.fetch(new Request('https://api.test/me'),{...env,FIREBASE_CLIENT_EMAIL:'',FIREBASE_PRIVATE_KEY:''});
+    assert.equal(response.status,503);
+    const {error}=await response.json();
+    assert.match(error,/FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY/);
+    assert.match(error,/restart or redeploy/);
+    assert.equal(error.includes('Bearer'),false);
+});
 test('bootstrap role is assigned only to configured UID; new users are guests',async()=>{
     assert.equal((await call('/me',{token:'root'})).data.user.role,'admin');
     assert.equal((await call('/me',{token:'guest'})).data.user.role,'guest');

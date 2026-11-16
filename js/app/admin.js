@@ -132,7 +132,7 @@ await run(async()=>{
         $('#workspace').hidden=true;$('#login-panel').hidden=!(!user);$('#signout').hidden=!user;
         if(!user){profile=null;$('#identity').textContent='Family access';$('#login-panel').hidden=false;return;}
         try{await refresh();$('#login-panel').hidden=true;$('#workspace').hidden=false;setView(activeView);}
-        catch(error){$('#login-panel').hidden=false;$('#resend-verification').hidden=demoMode;$('#login-signout').hidden=false;notice(error.message,true);}
+        catch(error){$('#login-panel').hidden=false;$('#resend-verification').hidden=demoMode || user.emailVerified !== false;$('#login-signout').hidden=false;notice(error.message,true);}
     });
     ['#email-login','#google-login','#register','#reset-password'].forEach(selector=>$(selector).disabled=false);
 });
