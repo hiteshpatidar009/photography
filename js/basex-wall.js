@@ -445,8 +445,8 @@ $(function() {
 
 
 // 11. the Wall
-window.addEvent("domready", function() {
-    var wallPhotos = window.WEDDING.photos.length ? window.WEDDING.photos : window.WEDDING.placeholders;
+function initializeWeddingWall() {
+    var wallPhotos = window.WEDDING.backgroundPhotos || (window.WEDDING.photos.length ? window.WEDDING.photos : window.WEDDING.placeholders);
     var imagewall = Array.from({length: 36}, function(_, i) {
         var photo = wallPhotos[i % wallPhotos.length];
         return [photo.thumbnail || photo.src, [[photo.src, photo.caption || "Tarun &amp; Shelu"]]];
@@ -595,4 +595,6 @@ window.addEvent("domready", function() {
         }
         window.requestAnimationFrame(step);
     }
-});
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initializeWeddingWall, {once:true});
+else initializeWeddingWall();

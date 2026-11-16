@@ -21,7 +21,7 @@ export function validateSettings(input) {
     requireValue(input && typeof input === 'object', 'Invalid website settings.');
     const result = {};
     for (const key of ['coupleNames', 'groomName', 'brideName', 'groomBio', 'brideBio', 'headline', 'welcome', 'venue', 'contactName', 'contactPhone', 'rsvpMessage']) result[key] = text(input[key], 1500);
-    for (const key of ['mapUrl', 'rsvpUrl', 'heroPhoto', 'musicUrl']) result[key] = httpsUrl(input[key]);
+    for (const key of ['mapUrl', 'rsvpUrl', 'heroPhoto', 'adminBackground', 'musicUrl']) result[key] = httpsUrl(input[key]);
     result.story = {meeting: text(input.story?.meeting, 3000), memories: text(input.story?.memories, 3000)};
     requireValue(validDate(input.startDate), 'Choose a valid diary start date.');
     result.startDate = input.startDate;

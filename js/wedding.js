@@ -12,7 +12,7 @@
         const map = safeUrl(event.mapUrl);
         return `<article class="row wedding-event">
             <div class="col-sm-3"><div class="inner-spacer">
-                <div class="chart-wrapper event-date-ring"><span class="chart-skills chart-appear-skills" data-percent="100"><span class="percent-skills" aria-hidden="true"></span></span><span class="event-day">${escape(event.date.slice(-2))}<small>FEB 2027</small></span></div>
+                <div class="chart-wrapper event-date-ring"><span class="chart-skills chart-appear-skills" data-percent="100"><span class="percent-skills" aria-hidden="true"></span></span><span class="event-day">${escape(event.date.slice(-2))}<small>${escape(date.toLocaleDateString('en-GB', {month:'short', year:'numeric', timeZone:'Asia/Kolkata'}).toUpperCase())}</small></span></div>
             </div></div>
             <div class="col-sm-6"><div class="inner-spacer">
                 <h2 class="section-subheading"><span lang="hi">${escape(event.hindi)}</span></h2><div class="divider-s"></div>

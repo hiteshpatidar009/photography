@@ -1,5 +1,5 @@
 // Dynamic works data
-const imageList = window.WEDDING.photos.length ? window.WEDDING.photos : window.WEDDING.placeholders;
+const imageList = window.WEDDING.photos;
 
 let currentPage = 0;
 const imagesPerPage = 12;
@@ -118,6 +118,7 @@ function generateCarousel() {
 function initDynamicWorks() {
     document.querySelector('.owl-nav-custom-works').hidden = imageList.length <= imagesPerPage;
     if (window.WEDDING.photos.length) document.getElementById('gallery-note').textContent = 'Our beautiful moments, gathered with love.';
+    if (!imageList.length) { document.getElementById('gallery-note').textContent = 'Our favourite photographs will appear here soon.'; return; }
     generateDynamicCSS();
     generateWorksGrid();
     generateCarousel();

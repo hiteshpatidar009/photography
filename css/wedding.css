@@ -52,3 +52,18 @@ a:focus-visible, [role="button"]:focus-visible { outline: 2px solid #ad946e; out
 @media(max-width:880px) { .home-account-links { top: 28px; right: 100px; gap: 12px; } }
 @media(max-width:540px) { .home-account-links { top: 92px; right: 25px; left: 25px; justify-content: flex-end; font-size: 10px; } .home-admin-login { padding: 9px 13px; } }
 @media(max-width:880px) { .diary-links { margin-left:25px; margin-right:25px; } }
+
+.hero-bg { background-size:cover; background-position:center; }
+.public-moments {padding:90px 6%;background:#f7f5f0;text-align:center;}
+.public-eyebrow {font-size:10px;letter-spacing:.15em;}
+.public-moments h2 {margin:20px 0;}
+.public-moments p {margin:20px auto;max-width:620px;line-height:1.8;}
+.public-photo-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin:40px 0;}
+.public-photo-grid a {text-align:left;}
+.public-photo-grid img {display:block;width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform .4s;}
+.public-photo-grid a:hover img {transform:translateY(-5px);}
+.public-photo-grid span {display:block;margin-top:12px;line-height:1.6;overflow-wrap:anywhere;}
+.public-actions {display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:30px;}
+.public-actions a {border-bottom:1px solid #ad946e;padding-bottom:6px;}
+#more-public-photos {padding:12px 25px;background:transparent;border:1px solid #ad946e;}
+@media(max-width:767px){.public-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;}.public-moments{padding:60px 25px;}}

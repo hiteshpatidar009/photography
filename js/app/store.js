@@ -1,7 +1,7 @@
 import {runtime, demoMode} from './config.js';
 import {assertUpload, validateSettings, publicPhoto, requireValue} from './domain.js';
 
-export const defaults = () => ({...structuredClone(window.WEDDING), coupleNames: 'Tarun & Shelu', groomName: 'Tarun Gami', brideName: 'Shelu Patidar', groomBio: 'From Ujjain, Madhya Pradesh. A software developer at Appalto Electronics, with an education affiliation at the Institute of Engineering & Technology, DAVV, Indore.', brideBio: 'Meet Shelu, as we look forward to celebrating this new chapter with our families and friends.', headline: 'Two Hearts, One Beautiful Journey', welcome: 'Together with our families, we invite you to celebrate the beginning of our forever.', startDate: '2027-02-08', uploadsEnabled: true, heroPhoto: '', musicUrl: ''});
+export const defaults = () => ({...structuredClone(window.WEDDING), coupleNames: 'Tarun & Shelu', groomName: 'Tarun Gami', brideName: 'Shelu Patidar', groomBio: 'From Ujjain, Madhya Pradesh. A software developer at Appalto Electronics, with an education affiliation at the Institute of Engineering & Technology, DAVV, Indore.', brideBio: 'Meet Shelu, as we look forward to celebrating this new chapter with our families and friends.', headline: 'Two Hearts, One Beautiful Journey', welcome: 'Together with our families, we invite you to celebrate the beginning of our forever.', startDate: '2027-02-08', uploadsEnabled: true, heroPhoto: '', adminBackground: '', musicUrl: ''});
 let firebaseAuth, firebaseSDK;
 let demoUser = null;
 export function currentUser() { return demoMode ? demoUser : firebaseAuth?.currentUser; }

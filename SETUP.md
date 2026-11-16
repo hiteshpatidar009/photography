@@ -172,3 +172,10 @@ Official references:
 - https://vercel.com/docs/functions/limitations
 - https://firebase.google.com/docs/auth/web/google-signin
 - https://api.imgbb.com/
+
+
+### Homepage photos and first upload
+
+Save **Website & events** once before the first upload. The dashboard opens this section automatically when settings are missing. Failed uploads display the reason in the notice; they are not published.
+
+In the photo library, use **Feature** to select photos for **Our Beautiful Moments**, **Use as home background** for the animated homepage background, or **Use as admin background** for the studio. Background URLs can also be edited or cleared in Website & events. Published, unarchived photos appear automatically in **Public Moments** near the bottom of the homepage, with pagination. Daily albums remain on the diary page. Hide a photo or archive its album to remove it from public galleries; clear a background URL separately if that photo was selected as a background.
