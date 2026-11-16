@@ -32,18 +32,52 @@ try {
             const original=window.WEDDING;window.WEDDING={...original,...data.settings};
             const curated=data.featured || data.photos.filter(p=>p.featured);
             window.WEDDING.photos=[...original.photos,...curated];
-            window.WEDDING.backgroundPhotos = data.settings.heroPhoto ? [{src:data.settings.heroPhoto,caption:data.settings.coupleNames}] : (window.WEDDING.photos.length ? window.WEDDING.photos : original.placeholders);
-            const fields={'.intro-title':'coupleNames','.wedding-heading':'headline','.wedding-hero-copy':'welcome','[data-couple="groom-name"]':'groomName','[data-couple="bride-name"]':'brideName','[data-couple="groom-bio"]':'groomBio','[data-couple="bride-bio"]':'brideBio'};
+            window.WEDDING.backgroundPhotos = data.banner?.length ? data.banner : (data.settings.heroPhoto ? [{src:data.settings.heroPhoto,caption:data.settings.coupleNames}] : null);
+            if (typeof window.renderHeroBoxGrid === 'function') {
+                window.renderHeroBoxGrid(window.WEDDING.backgroundPhotos);
+            }
+            const heroGrid = document.getElementById('hero-photo-grid');
+            if (heroGrid && data.settings) {
+                heroGrid.classList.toggle('animated', data.settings.bannerMotion !== false);
+            }
+            if (window.WEDDING.backgroundPhotos?.length) {
+                if (typeof window.updateWeddingWallPhotos === 'function') {
+                    window.updateWeddingWallPhotos(window.WEDDING.backgroundPhotos);
+                } else {
+                    window._pendingBannerPhotos = window.WEDDING.backgroundPhotos;
+                }
+            }
+            const overlay = document.querySelector('.overlay-home-wall') || document.querySelector('.hpg-overlay');
+            if (overlay) overlay.style.backgroundColor = `rgba(0,0,0,${(data.settings.bannerOverlay ?? 45)/100})`;
+            const fields={'.intro-subtitle':'bannerKicker','.wedding-hero-link':'bannerLinkText','.intro-title':'coupleNames','.wedding-heading':'headline','.wedding-hero-copy':'welcome','[data-couple="groom-name"]':'groomName','[data-couple="bride-name"]':'brideName','[data-couple="groom-bio"]':'groomBio','[data-couple="bride-bio"]':'brideBio'};
             for(const [selector,key] of Object.entries(fields)){const el=document.querySelector(selector);if(el&&data.settings[key])el.textContent=data.settings[key];}
             document.title=(data.settings.coupleNames||'Tarun & Shelu')+' | Wedding Celebrations';
-            document.querySelector('.facts-counter-number-years').textContent=String(window.WEDDING.events.length);
+            const counter = document.querySelector('.facts-counter-number-years');
+            if (counter) counter.textContent=String(window.WEDDING.events.length);
         }
     }
-}catch(error){document.getElementById('public-photo-status').textContent = 'Memories are temporarily unavailable. Please reload to try again.';console.info('Showing the saved invitation while live content is unavailable.');}
-const backdrop = window.WEDDING.backgroundPhotos?.[0]?.src || window.WEDDING.photos[0]?.src || window.WEDDING.placeholders[0].src;
-document.querySelector('.hero-bg').style.backgroundImage = `url(${JSON.stringify(backdrop)})`;
+}catch(error){
+    const statusEl = document.getElementById('public-photo-status');
+    if (statusEl) statusEl.textContent = 'Memories are temporarily unavailable. Please reload to try again.';
+    console.info('Showing the saved invitation while live content is unavailable.');
+}
+const backdrop = (window.WEDDING.backgroundPhotos?.[0]?.src && !window.WEDDING.backgroundPhotos[0].src.endsWith('.svg')) ? window.WEDDING.backgroundPhotos[0].src : 'img/heroimgs/web/img1.jpg';
+const heroBg = document.querySelector('.hero-bg');
+if (heroBg) heroBg.style.backgroundImage = `url(${JSON.stringify(backdrop)})`;
+const gridCells = document.querySelectorAll('.hero-photo-grid .hpg-cell');
+if (gridCells.length && window.WEDDING.backgroundPhotos?.length) {
+    const bgList = window.WEDDING.backgroundPhotos;
+    gridCells.forEach((cell, idx) => {
+        const photo = bgList[idx % bgList.length];
+        if (photo?.src) cell.style.backgroundImage = `url(${JSON.stringify(photo.src)})`;
+    });
+}
 for(const src of ['js/wedding.js','js/dynamic-works.js','js/basex-wall.js']){
+    if (document.querySelector(`script[src="${src}"]`)) continue;
     await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=src;script.onload=resolve;script.onerror=reject;document.body.append(script);}).catch(()=>{
         document.querySelector('#preloader').style.display='none';document.querySelector('.preloader-bg').style.display='none';
     });
+}
+if (typeof window.renderHeroBoxGrid === 'function') {
+    window.renderHeroBoxGrid(window.WEDDING?.backgroundPhotos);
 }

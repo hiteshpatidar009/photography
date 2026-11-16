@@ -22,6 +22,14 @@ export function validateSettings(input) {
     const result = {};
     for (const key of ['coupleNames', 'groomName', 'brideName', 'groomBio', 'brideBio', 'headline', 'welcome', 'venue', 'contactName', 'contactPhone', 'rsvpMessage']) result[key] = text(input[key], 1500);
     for (const key of ['mapUrl', 'rsvpUrl', 'heroPhoto', 'adminBackground', 'musicUrl']) result[key] = httpsUrl(input[key]);
+    const bannerIds = input.bannerPhotoIds ?? [];
+    requireValue(Array.isArray(bannerIds) && bannerIds.length <= 24 && bannerIds.every(id => typeof id === 'string' && /^[a-f0-9]{64}$/.test(id)), 'Choose up to 24 valid banner photos.');
+    result.bannerPhotoIds = [...new Set(bannerIds)];
+    result.bannerMotion = input.bannerMotion !== false;
+    result.bannerOverlay = input.bannerOverlay == null ? 45 : Number(input.bannerOverlay);
+    requireValue(Number.isFinite(result.bannerOverlay) && result.bannerOverlay >= 20 && result.bannerOverlay <= 75, 'Banner shading must be between 20 and 75.');
+    result.bannerKicker = text(input.bannerKicker ?? 'Together with our families', 150);
+    result.bannerLinkText = text(input.bannerLinkText ?? 'Explore the celebrations', 150);
     result.story = {meeting: text(input.story?.meeting, 3000), memories: text(input.story?.memories, 3000)};
     requireValue(validDate(input.startDate), 'Choose a valid diary start date.');
     result.startDate = input.startDate;

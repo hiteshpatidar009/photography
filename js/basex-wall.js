@@ -445,13 +445,113 @@ $(function() {
 
 
 // 11. the Wall
-function initializeWeddingWall() {
-    var wallPhotos = window.WEDDING.backgroundPhotos || (window.WEDDING.photos.length ? window.WEDDING.photos : window.WEDDING.placeholders);
-    var imagewall = Array.from({length: 36}, function(_, i) {
-        var photo = wallPhotos[i % wallPhotos.length];
-        return [photo.thumbnail || photo.src, [[photo.src, photo.caption || "Tarun &amp; Shelu"]]];
-    });
+function initializeWeddingWall(force) {
+    if (document.getElementById("hero-photo-grid")) {
+        if (typeof window.renderHeroBoxGrid === 'function') {
+            window.renderHeroBoxGrid(window.WEDDING && window.WEDDING.backgroundPhotos);
+        }
+        return;
+    }
+    if (window._wallInitialized && !force) return;
+    var wallEl = document.getElementById("wall");
+    if (!wallEl) return;
+    if (force) {
+        if (window._wallDriftRaf) {
+            cancelAnimationFrame(window._wallDriftRaf);
+            window._wallDriftRaf = null;
+        }
+        wallEl.innerHTML = "";
+        wallEl.style.left = "0px";
+        wallEl.style.top = "0px";
+    }
+    window._wallInitialized = true;
+
+    var defaultImageWall = [
+        ["img/heroimgs/web/img1.jpg", [["img/heroimgs/web/img1.jpg", "Tarun &amp; Shelu<br \/>\r\nWedding"]]],
+        ["img/heroimgs/web/img3.jpg", [["the-wall/4.jpg", "Celebrations<br \/>\r\nMemories"]]],
+        ["img/heroimgs/web/img4.jpg", [["the-wall/3.jpg", "Moments<br \/>\r\nTogether"]]],
+        ["img/heroimgs/web/img5.jpg", [["the-wall/4.jpg", "Celebrations<br \/>\r\nMemories"]]],
+        ["img/heroimgs/web/img6.jpg", [["the-wall/5.jpg", "Love &amp; Laughter<br \/>\r\nFamily"]]],
+        ["img/heroimgs/web/img7.jpg", [["the-wall/6.jpg", "Special Moments<br \/>\r\nEvents"]]],
+        ["img/heroimgs/web/img8.jpg", [["the-wall/7.jpg", "Ceremony<br \/>\r\nJoy"]]],
+        ["img/heroimgs/web/img9.jpg", [["the-wall/8.jpg", "Traditions<br \/>\r\nFestivities"]]],
+        ["img/heroimgs/web/img10.jpg", [["the-wall/9.jpg", "Celebrations<br \/>\r\nBlessings"]]],
+        ["img/heroimgs/web/img11.jpg", [["the-wall/10.jpg", "Gatherings<br \/>\r\nHappiness"]]],
+        ["img/heroimgs/web/img12.jpg", [["the-wall/11.jpg", "Memories<br \/>\r\nSmiles"]]],
+        ["img/heroimgs/web/img13.jpg", [["the-wall/12.jpg", "Forever<br \/>\r\nTogether"]]],
+        ["img/heroimgs/web/img14.jpg", [
+            ["img/heroimgs/web/img14.jpg", "Tarun &amp; Shelu<br \/>\r\nLove"],
+            ["the-wall/13-3.jpg", "Celebration<br \/>\r\nJoy"],
+            ["the-wall/13-4.jpg", "Memories<br \/>\r\nForever"]
+        ]],
+        ["img/heroimgs/web/img15.jpg", [["the-wall/14.jpg", "Blessings<br \/>\r\nLove"]]],
+        ["img/heroimgs/web/img16.jpg", [["the-wall/15.jpg", "Cherished<br \/>\r\nMoments"]]],
+        ["img/heroimgs/web/img1.jpg", [["img/heroimgs/web/img1.jpg", "Tarun &amp; Shelu<br \/>\r\nWedding"]]],
+        ["img/heroimgs/web/img3.jpg", [["the-wall/4.jpg", "Celebrations<br \/>\r\nMemories"]]],
+        ["img/heroimgs/web/img4.jpg", [["the-wall/3.jpg", "Moments<br \/>\r\nTogether"]]],
+        ["img/heroimgs/web/img5.jpg", [["the-wall/4.jpg", "Celebrations<br \/>\r\nMemories"]]],
+        ["img/heroimgs/web/img6.jpg", [["the-wall/5.jpg", "Love &amp; Laughter<br \/>\r\nFamily"]]],
+        ["img/heroimgs/web/img7.jpg", [["the-wall/6.jpg", "Special Moments<br \/>\r\nEvents"]]],
+        ["img/heroimgs/web/img8.jpg", [["the-wall/7.jpg", "Ceremony<br \/>\r\nJoy"]]],
+        ["img/heroimgs/web/img9.jpg", [["the-wall/8.jpg", "Traditions<br \/>\r\nFestivities"]]],
+        ["img/heroimgs/web/img10.jpg", [["the-wall/9.jpg", "Celebrations<br \/>\r\nBlessings"]]],
+        ["img/heroimgs/web/img11.jpg", [["the-wall/10.jpg", "Gatherings<br \/>\r\nHappiness"]]],
+        ["img/heroimgs/web/img12.jpg", [["the-wall/11.jpg", "Memories<br \/>\r\nSmiles"]]],
+        ["img/heroimgs/web/img13.jpg", [["the-wall/12.jpg", "Forever<br \/>\r\nTogether"]]],
+        ["img/heroimgs/web/img14.jpg", [
+            ["img/heroimgs/web/img14.jpg", "Tarun &amp; Shelu<br \/>\r\nLove"],
+            ["the-wall/13-3.jpg", "Celebration<br \/>\r\nJoy"],
+            ["the-wall/13-4.jpg", "Memories<br \/>\r\nForever"]
+        ]],
+        ["img/heroimgs/web/img15.jpg", [["the-wall/14.jpg", "Blessings<br \/>\r\nLove"]]],
+        ["img/heroimgs/web/img1.jpg", [["img/heroimgs/web/img1.jpg", "Tarun &amp; Shelu<br \/>\r\nWedding"]]],
+        ["img/heroimgs/web/img3.jpg", [["the-wall/4.jpg", "Celebrations<br \/>\r\nMemories"]]],
+        ["img/heroimgs/web/img4.jpg", [["the-wall/3.jpg", "Moments<br \/>\r\nTogether"]]],
+        ["img/heroimgs/web/img5.jpg", [["the-wall/4.jpg", "Celebrations<br \/>\r\nMemories"]]],
+        ["img/heroimgs/web/img6.jpg", [["the-wall/5.jpg", "Love &amp; Laughter<br \/>\r\nFamily"]]]
+    ];
+
+    var customPhotos = window._pendingBannerPhotos
+        || ((window.WEDDING && window.WEDDING.backgroundPhotos && window.WEDDING.backgroundPhotos.length)
+            ? window.WEDDING.backgroundPhotos
+            : (window.WEDDING && window.WEDDING.photos && window.WEDDING.photos.length)
+                ? window.WEDDING.photos
+                : null);
+
+    var imagewall = customPhotos
+        ? Array.from({length: 36}, function(_, i) {
+            var photo = customPhotos[i % customPhotos.length];
+            var src = typeof photo === 'string' ? photo : (photo.src || photo.url);
+            var caption = (typeof photo === 'object' && photo.caption) ? photo.caption : "Tarun &amp; Shelu";
+            return [src, [[src, caption]]];
+          })
+        : defaultImageWall;
     var maxLength = imagewall.length;
+
+    window.updateWeddingWallPhotos = function(photos) {
+        if (!photos || !photos.length) return;
+        window._pendingBannerPhotos = photos;
+        imagewall = Array.from({length: 36}, function(_, i) {
+            var photo = photos[i % photos.length];
+            var src = typeof photo === 'string' ? photo : (photo.src || photo.url);
+            var caption = (typeof photo === 'object' && photo.caption) ? photo.caption : "Tarun &amp; Shelu";
+            return [src, [[src, caption]]];
+        });
+        maxLength = imagewall.length;
+        var tiles = document.querySelectorAll("#wall .tile");
+        tiles.forEach(function(tile, idx) {
+            var item = imagewall[idx % imagewall.length];
+            if (!item || !item[0]) return;
+            var img = tile.querySelector("img");
+            if (img) img.src = item[0];
+            var slideImgs = tile.querySelectorAll(".slideshow img");
+            slideImgs.forEach(function(sImg) {
+                sImg.src = item[0];
+            });
+            var captionEl = tile.querySelector(".wall-item-description span");
+            if (captionEl) captionEl.innerHTML = item[1][0][1] || "Tarun &amp; Shelu";
+        });
+    };
     var wallFluid = new Wall("wall", {
         "draggable": true,
 		"slideshow": false, // continuous drift below replaces the tile-by-tile slideshow
@@ -541,7 +641,7 @@ function initializeWeddingWall() {
     });
     window.setTimeout(function() {
         wallFluid.initWall();
-        startWallDrift();
+        if (window.WEDDING.bannerMotion !== false) startWallDrift();
     }, 500);
 
     // continuous smooth drift of the wall (pauses while the user drags it)
@@ -591,10 +691,17 @@ function initializeWeddingWall() {
                 var newTiles = wallFluid.updateWall();
                 if (newTiles.length) wallFluid.options.callOnUpdate(newTiles);
             }
-            window.requestAnimationFrame(step);
+            window._wallDriftRaf = window.requestAnimationFrame(step);
         }
-        window.requestAnimationFrame(step);
+        window._wallDriftRaf = window.requestAnimationFrame(step);
     }
 }
-if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initializeWeddingWall, {once:true});
-else initializeWeddingWall();
+window.initializeWeddingWall = initializeWeddingWall;
+if (window.addEvent) {
+    window.addEvent("domready", initializeWeddingWall);
+}
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeWeddingWall, {once: true});
+} else {
+    initializeWeddingWall();
+}

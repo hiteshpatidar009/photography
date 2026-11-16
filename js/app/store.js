@@ -1,7 +1,7 @@
 import {runtime, demoMode} from './config.js';
 import {assertUpload, validateSettings, publicPhoto, requireValue} from './domain.js';
 
-export const defaults = () => ({...structuredClone(window.WEDDING), coupleNames: 'Tarun & Shelu', groomName: 'Tarun Gami', brideName: 'Shelu Patidar', groomBio: 'From Ujjain, Madhya Pradesh. A software developer at Appalto Electronics, with an education affiliation at the Institute of Engineering & Technology, DAVV, Indore.', brideBio: 'Meet Shelu, as we look forward to celebrating this new chapter with our families and friends.', headline: 'Two Hearts, One Beautiful Journey', welcome: 'Together with our families, we invite you to celebrate the beginning of our forever.', startDate: '2027-02-08', uploadsEnabled: true, heroPhoto: '', adminBackground: '', musicUrl: ''});
+export const defaults = () => ({...structuredClone(window.WEDDING), coupleNames: 'Tarun & Shelu', groomName: 'Tarun Gami', brideName: 'Shelu Patidar', groomBio: 'From Ujjain, Madhya Pradesh. A software developer at Appalto Electronics, with an education affiliation at the Institute of Engineering & Technology, DAVV, Indore.', brideBio: 'Meet Shelu, as we look forward to celebrating this new chapter with our families and friends.', headline: 'Two Hearts, One Beautiful Journey', welcome: 'Together with our families, we invite you to celebrate the beginning of our forever.', startDate: '2027-02-08', uploadsEnabled: true, bannerPhotoIds: [], bannerMotion: true, bannerOverlay: 45, bannerKicker: 'Together with our families', bannerLinkText: 'Explore the celebrations', heroPhoto: '', adminBackground: '', musicUrl: ''});
 let firebaseAuth, firebaseSDK;
 let demoUser = null;
 export function currentUser() { return demoMode ? demoUser : firebaseAuth?.currentUser; }
@@ -79,7 +79,7 @@ async function demoRequest(path, input) {
         if (path === '/public') {
             const photos = page(state.photos);
             const visible = p => p.status === 'published' && !state.albums.some(a => a.date === p.date && a.archived);
-            return {settings: state.settings, photos: photos.items.filter(visible).map(publicPhoto), featured: state.photos.filter(p => p.featured && visible(p)).slice(0,12).map(publicPhoto), albums: state.albums.filter(a => !a.archived), cursor: photos.cursor};
+            return {settings: state.settings, banner: (state.settings.bannerPhotoIds || []).map(id => state.photos.find(p => p.id === id)).filter(p => p && visible(p)).map(publicPhoto), photos: photos.items.filter(visible).map(publicPhoto), featured: state.photos.filter(p => p.featured && visible(p)).slice(0,12).map(publicPhoto), albums: state.albums.filter(a => !a.archived), cursor: photos.cursor};
         }
         const user = state.users.find(u => u.uid === demoUser?.uid);
         requireValue(user && !user.disabled, 'Please sign in with an active account.', 403);

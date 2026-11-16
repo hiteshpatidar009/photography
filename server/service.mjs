@@ -91,7 +91,8 @@ export async function route(request, env) {
         const [settings, photos, albums] = await Promise.all([db.get('settings/site'), db.list('photos', url.searchParams.get('cursor') || '', 50), db.list('albums', '', 1000)]);
         const hiddenDates = new Set(albums.items.filter(x => x.archived).map(x => x.date));
         const featured = url.searchParams.get('home') === '1' ? (await db.query('photos', 'featured', true, 50)).filter(p => p.status === 'published' && !hiddenDates.has(p.date)).slice(0,12).map(publicPhoto) : [];
-        return json({settings, photos: photos.items.filter(p => p.status === 'published' && !hiddenDates.has(p.date)).map(publicPhoto), featured, albums: albums.items.filter(x => !x.archived), cursor: photos.cursor});
+        const banner = url.searchParams.get('home') === '1' ? (await Promise.all((settings?.bannerPhotoIds || []).slice(0,24).filter(id => /^[a-f0-9]{64}$/.test(id)).map(id => db.get('photos/' + id)))).filter(p => p?.status === 'published' && !hiddenDates.has(p.date)).map(publicPhoto) : [];
+        return json({settings, banner, photos: photos.items.filter(p => p.status === 'published' && !hiddenDates.has(p.date)).map(publicPhoto), featured, albums: albums.items.filter(x => !x.archived), cursor: photos.cursor});
     }
     const user = await identify(request, env, db);
     if (path === '/me' && request.method === 'GET') {

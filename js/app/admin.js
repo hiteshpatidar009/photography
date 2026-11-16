@@ -8,11 +8,12 @@ let profile, settings = defaults(), photos = [], albums = [], users = [], audit 
 function notice(message, error = false) { const el = $('#notice'); el.textContent = message; el.className = 'notice' + (error ? ' error' : ''); el.hidden = false; }
 async function run(action, button) { if (button) button.disabled = true; try { return await action(); } catch (error) { notice(error.message, true); } finally { if (button) button.disabled = button.id === 'upload-button' && !settings.uploadsEnabled; } }
 function setView(name) {
-    if (['settings','people','archive'].includes(name) && profile?.role !== 'admin') return;
+    if (['settings','people','archive','banner'].includes(name) && profile?.role !== 'admin') return;
     activeView = name;
     document.querySelectorAll('[data-panel]').forEach(el => el.hidden = el.dataset.panel !== name);
     document.querySelectorAll('[data-view]').forEach(el => el.classList.toggle('active', el.dataset.view === name));
     if (name === 'settings') renderSettings();
+    if (name === 'banner') renderBanner();
     $('#workspace').scrollIntoView({behavior:'smooth',block:'start'});
 }
 document.querySelectorAll('[data-view],[data-go]').forEach(el => el.addEventListener('click', () => { if (profile) setView(el.dataset.view || el.dataset.go); }));
@@ -41,7 +42,7 @@ async function refresh() {
     render();
 }
 function photoCard(photo) {
-    return `<article class="photo-card"><button class="photo-image" data-open="${esc(photo.id)}" aria-label="View ${esc(photo.caption || 'photo')}"><img src="${esc(photo.thumbnail || photo.src || 'img/wedding/blessings.svg')}" loading="lazy" alt="${esc(photo.caption || 'Wedding memory')}"></button><div class="photo-info"><span class="pill ${esc(photo.side)}">${esc(photo.side === 'guest' ? 'Guest memories' : photo.side + '’s side')}</span> <span class="pill ${esc(photo.status)}">${esc(photo.status)}</span><p>${esc(photo.caption || 'A little moment, kept forever.')}</p><small>${esc(photo.date)}${photo.featured ? ' · Featured' : ''}</small>${profile.role === 'admin' && ['published','hidden'].includes(photo.status) ? `<div class="card-actions"><button class="text-button" data-photo="${esc(photo.id)}" data-action="visibility">${photo.status === 'hidden' ? 'Restore' : 'Hide photo'}</button><button class="text-button" data-photo="${esc(photo.id)}" data-action="feature">${photo.featured ? 'Unfeature' : 'Feature'}</button><button class="text-button" data-background="heroPhoto" data-id="${esc(photo.id)}">Use as home background</button><button class="text-button" data-background="adminBackground" data-id="${esc(photo.id)}">Use as admin background</button>${photo.deleteUrl ? `<a class="text-button" href="${esc(photo.deleteUrl)}" target="_blank" rel="noopener noreferrer">Delete at host ↗</a>` : ''}</div>` : ''}</div></article>`;
+    return `<article class="photo-card"><button class="photo-image" data-open="${esc(photo.id)}" aria-label="View ${esc(photo.caption || 'photo')}"><img src="${esc(photo.thumbnail || photo.src || 'img/wedding/blessings.svg')}" loading="lazy" alt="${esc(photo.caption || 'Wedding memory')}"></button><div class="photo-info"><span class="pill ${esc(photo.side)}">${esc(photo.side === 'guest' ? 'Guest memories' : photo.side + '’s side')}</span> <span class="pill ${esc(photo.status)}">${esc(photo.status)}</span><p>${esc(photo.caption || 'A little moment, kept forever.')}</p><small>${esc(photo.date)}${photo.featured ? ' · Featured' : ''}</small>${profile.role === 'admin' && ['published','hidden'].includes(photo.status) ? `<div class="card-actions"><button class="text-button" data-photo="${esc(photo.id)}" data-action="visibility">${photo.status === 'hidden' ? 'Restore' : 'Hide photo'}</button><button class="text-button" data-photo="${esc(photo.id)}" data-action="feature">${photo.featured ? 'Unfeature' : 'Feature'}</button><button class="text-button" data-add-to-banner="${esc(photo.id)}">Add to moving banner</button><button class="text-button" data-background="heroPhoto" data-id="${esc(photo.id)}">Use as single home background</button><button class="text-button" data-background="adminBackground" data-id="${esc(photo.id)}">Use as admin background</button>${photo.deleteUrl ? `<a class="text-button" href="${esc(photo.deleteUrl)}" target="_blank" rel="noopener noreferrer">Delete at host ↗</a>` : ''}</div>` : ''}</div></article>`;
 }
 function applyStudioBackground(value) {
     const url = value?.adminBackground;
@@ -118,7 +119,16 @@ document.addEventListener('click',event=>{
     const target=event.target.closest('button');if(!target)return;
     if(target.dataset.remove!==undefined){setFiles(selected.filter((_,i)=>i!==Number(target.dataset.remove)));return;}
     if(target.dataset.open){const p=photos.find(x=>x.id===target.dataset.open);if(!p?.src)return;const dialog=$('#photo-dialog');dialog.querySelector('img').src=p.src;dialog.querySelector('img').alt=p.caption||'Wedding memory';dialog.querySelector('p').textContent=p.caption;dialog.showModal();}
-    if(target.dataset.background)run(async()=>{const p=photos.find(x=>x.id===target.dataset.id);await api('/admin/settings',{...settings,[target.dataset.background]:p.src});await refresh();notice('Background saved. Reload the homepage to see it.');},target);
+    if(target.dataset.addToBanner)run(async()=>{
+        const id=target.dataset.addToBanner;
+        const current=settings.bannerPhotoIds||[];
+        if(current.includes(id))return notice('This photo is already in the moving banner.');
+        if(current.length>=24)return notice('Moving banner has reached the 24-photo maximum.',true);
+        const updated=[...current,id];
+        await api('/admin/settings',{...settings,bannerPhotoIds:updated,heroPhoto:''});
+        await refresh();notice('Photo added to moving banner! Reload homepage to see it.');
+    },target);
+    if(target.dataset.background)run(async()=>{const p=photos.find(x=>x.id===target.dataset.id);await api('/admin/settings',{...settings,[target.dataset.background]:p.src,...(target.dataset.background==='heroPhoto'?{bannerPhotoIds:[]}: {})});await refresh();notice('Background saved. Reload the homepage to see it.');},target);
     if(target.dataset.photo)run(async()=>{const p=photos.find(x=>x.id===target.dataset.photo);await api('/admin/photo',{id:p.id,status:target.dataset.action==='visibility'?(p.status==='hidden'?'published':'hidden'):p.status,featured:target.dataset.action==='feature'?!p.featured:p.featured});await refresh();notice('Photo updated.');},target);
     if(target.dataset.download)run(()=>downloadAlbum(target.dataset.download,Number(target.dataset.batch)),target);
 });
@@ -145,3 +155,80 @@ await run(async()=>{
     });
     ['#email-login','#google-login','#register','#reset-password'].forEach(selector=>$(selector).disabled=false);
 });
+
+let bannerDraft = [];
+function bannerEligible(photo) { return photo.status === 'published' && !albums.some(a => a.date === photo.date && a.archived); }
+function renderBanner() {
+    bannerDraft = [...(settings.bannerPhotoIds || [])];
+    const form = $('#banner-form');
+    for (const key of ['bannerKicker','bannerLinkText','bannerOverlay']) form.elements[key].value = settings[key];
+    form.elements.bannerMotion.checked = settings.bannerMotion !== false;
+    renderBannerPhotos();
+}
+function renderBannerPhotos() {
+    $('#banner-selected').innerHTML = bannerDraft.map((id,index) => {
+        const p = photos.find(p => p.id === id);
+        return `<article class="photo-card">${p?.src ? `<img class="banner-thumb" src="${esc(p.src)}" alt="${esc(p.caption || 'Banner photograph')}" loading="lazy">` : ''}<div class="photo-info"><strong>Photo ${index+1}</strong><p>${p && bannerEligible(p) ? esc(p.caption || 'Wedding memory') : 'Unavailable: hidden, archived or removed. This photo will not appear.'}</p><div class="card-actions"><button type="button" class="text-button" data-banner-move="${index}" data-step="-1" ${index===0?'disabled':''}>Earlier</button><button type="button" class="text-button" data-banner-move="${index}" data-step="1" ${index===bannerDraft.length-1?'disabled':''}>Later</button><button type="button" class="text-button" data-banner-remove="${index}">Remove</button></div></div></article>`;
+    }).join('') || '<p>No banner photos selected. Add several photos below to create the collage.</p>';
+    $('#banner-library').innerHTML = photos.filter(p => bannerEligible(p) && !bannerDraft.includes(p.id)).map(p => `<button type="button" class="banner-choice" data-banner-add="${esc(p.id)}"><img src="${esc(p.thumbnail || p.src)}" loading="lazy" alt="${esc(p.caption || 'Wedding photograph')}"><span>+ Add to banner</span></button>`).join('') || '<p>No more published photos available. Upload photos above.</p>';
+    updateBannerPreview();
+}
+function updateBannerPreview() {
+    const preview = $('#banner-preview'), form = $('#banner-form');
+    const chosen = bannerDraft.map(id => photos.find(p => p.id === id)).filter(p => p && bannerEligible(p));
+    const sources = chosen.length ? chosen : settings.heroPhoto && !bannerDraft.length ? [{src:settings.heroPhoto}] : window.WEDDING.placeholders;
+    preview.innerHTML = `<div class="banner-preview-grid">${Array.from({length:10},(_,i) => `<img src="${esc(sources[i%sources.length].src)}" alt="">`).join('')}</div><div class="banner-preview-shade"></div><div class="banner-preview-copy"><small>${esc(form.elements.bannerKicker.value)}</small><h2>${esc(settings.coupleNames)}</h2><h3>${esc(settings.headline)}</h3></div>`;
+    preview.querySelector('.banner-preview-shade').style.backgroundColor = `rgba(0,0,0,${Number(form.elements.bannerOverlay.value)/100})`;
+    preview.classList.toggle('animated', form.elements.bannerMotion.checked);
+}
+$('#banner-form').oninput = updateBannerPreview;
+$('#banner-form').onclick = event => {
+    const button = event.target.closest('button'); if (!button) return;
+    if (button.dataset.bannerAdd) {
+        if (bannerDraft.length >= 24) return notice('This banner can contain up to 24 photos. Remove one before adding another.',true);
+        bannerDraft.push(button.dataset.bannerAdd);
+    } else if (button.dataset.bannerRemove !== undefined) bannerDraft.splice(Number(button.dataset.bannerRemove),1);
+    else if (button.dataset.bannerMove !== undefined) {
+        const from=Number(button.dataset.bannerMove), to=from+Number(button.dataset.step);
+        if(to>=0 && to<bannerDraft.length) [bannerDraft[from],bannerDraft[to]]=[bannerDraft[to],bannerDraft[from]];
+    } else return;
+    renderBannerPhotos();
+};
+$('#banner-form').onsubmit = event => { event.preventDefault(); run(async()=>{
+    const form = event.target;
+    await api('/admin/settings',{...settings,bannerPhotoIds:bannerDraft,bannerKicker:form.elements.bannerKicker.value,bannerLinkText:form.elements.bannerLinkText.value,bannerMotion:form.elements.bannerMotion.checked,bannerOverlay:Number(form.elements.bannerOverlay.value),heroPhoto:bannerDraft.length ? '' : settings.heroPhoto});
+    await refresh(); renderBanner(); notice('Homepage banner saved. Open Preview homepage to see the animated collage.');
+},event.submitter); };
+$('#banner-upload').onclick = event => run(async()=>{
+    const files = [...$('#banner-files').files];
+    if (!files.length) throw new Error('Choose photographs first.');
+    if (files.length + bannerDraft.length > 24) throw new Error('Choose fewer files: the banner has room for '+(24-bannerDraft.length)+' more photos.');
+    const failures = []; let count = 0;
+    const saveButton = $('#banner-form button[type=submit]') || $('#banner-form .save-bar button');
+    saveButton.disabled = true;
+    try {
+        for (const file of files) {
+            $('#banner-upload-status').textContent = 'Uploading '+file.name+'...';
+            try {
+                const image = await optimizePhoto(file), form = new FormData();
+                form.set('image',image.blob,'banner.jpg');form.set('date',indiaDay());form.set('caption','');form.set('side','guest');
+                const {photo} = await api('/upload',form); bannerDraft.push(photo.id); count++;
+            } catch(error) { failures.push(file.name+': '+error.message); }
+        }
+        if (count > 0) {
+            const form = $('#banner-form');
+            await api('/admin/settings', {
+                ...settings,
+                bannerPhotoIds: bannerDraft,
+                bannerKicker: form.elements.bannerKicker?.value || settings.bannerKicker || '',
+                bannerLinkText: form.elements.bannerLinkText?.value || settings.bannerLinkText || '',
+                bannerMotion: form.elements.bannerMotion ? form.elements.bannerMotion.checked : (settings.bannerMotion !== false),
+                bannerOverlay: form.elements.bannerOverlay ? Number(form.elements.bannerOverlay.value) : (settings.bannerOverlay ?? 45),
+                heroPhoto: ''
+            });
+        }
+        await refresh(); renderBannerPhotos(); $('#banner-files').value='';
+        $('#banner-upload-status').textContent = count+' photo(s) uploaded and saved to moving banner! '+(failures.length?failures.join(' | '):'Reload homepage to see them.');
+        notice(count + ' photo(s) uploaded and saved to homepage banner!');
+    } finally { saveButton.disabled = false; }
+},event.target);
