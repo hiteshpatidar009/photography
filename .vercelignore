@@ -1,0 +1,11 @@
+.env*
+!.env.example
+.git/
+node_modules/
+dist/
+tests/
+*service-account*.json
+worker/
+img/heroimgs/
+img/new-images/
+the-wall/

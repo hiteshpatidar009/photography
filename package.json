@@ -1,0 +1,7 @@
+{
+  "name": "tarun-shelu-wedding",
+  "private": true,
+  "type": "module",
+  "engines": {"node": "22.x"},
+  "scripts": {"test": "node --test tests/*.test.mjs", "build": "node scripts/build.mjs", "configure": "node scripts/configure.mjs", "dev": "node scripts/dev.mjs", "demo": "node scripts/dev.mjs --demo", "check:env": "node scripts/configure.mjs --check"}
+}

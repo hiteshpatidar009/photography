@@ -1,0 +1,54 @@
+/* Content-specific additions. Original fonts, breakpoints and motion live in style.css. */
+.logo, .preloader-logo { background-image: url('../img/wedding/monogram.svg'); }
+.parallax-years { background-image: url('../img/wedding/blessings.svg'); }
+.wedding-heading { max-width: 1000px; }
+.wedding-hero-copy { color: #fff; max-width: 620px; margin: 24px 0 12px; line-height: 1.7; }
+.wedding-hero-link { color: #fff; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.wedding-hero-link { pointer-events: auto; }
+.intro { right: 50px; }
+.intro-subtitle { line-height: 1.5; }
+.gallery-note { margin: 0 50px 45px; max-width: 680px; }
+.section-txt p + p { margin-top: 16px; }
+.wedding-timeline { position: relative; }
+.wedding-event { position: relative; padding: 45px 0; border-top: 1px solid #ddd; }
+.wedding-event:last-child { border-bottom: 1px solid #ddd; }
+.event-date-ring { position: relative; width: 110px; height: 110px; margin: 0 auto; }
+.event-date-ring .percent-skills { visibility: hidden; }
+.event-day { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; font: 400 46px/1.2 'Oswald', sans-serif; pointer-events: none; }
+.event-day small { font: 400 11px/2 'Raleway', sans-serif; letter-spacing: .12em; }
+.event-illustration { width: 100%; height: auto; border-radius: 50%; aspect-ratio: 1; object-fit: cover; }
+.event-theme::before { content: ''; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #bd9f72; margin-right: 9px; }
+.theme-haldi::before { background: #b2a0cd; }
+.theme-mehendi::before { background: #a6bd8e; }
+.wedding-rsvp, .wedding-rsvp p, .wedding-rsvp a { color: #fff; }
+.wedding-rsvp { max-width: 700px; margin: auto; text-align: center; line-height: 1.9; }
+.wedding-rsvp a { display: inline-block; margin-top: 24px; }
+[hidden], .wedding-rsvp a[hidden] { display: none !important; }
+.contact-modal.open { overflow-y: auto; }
+a:focus-visible, [role="button"]:focus-visible { outline: 2px solid #ad946e; outline-offset: 6px; }
+@media only screen and (max-width: 880px) {
+    .intro { right: 25px; }
+    .gallery-note { margin-left: 25px; margin-right: 25px; }
+}
+@media only screen and (max-width: 767px) {
+    .wedding-event { padding: 30px 0; }
+    .event-date-ring { margin: 0 0 30px; }
+    .event-illustration { width: 120px; margin-top: 24px; }
+    .wedding-heading { font-size: 34px; }
+    .wedding-hero-copy { font-size: 13px; margin-top: 18px; }
+    .wedding-hero-link { font-size: 10px; }
+}
+
+.diary-links { display: flex; flex-wrap: wrap; gap: 20px; margin: 0 50px 40px; font-size: 12px; }
+.diary-links a { border-bottom: 1px solid #bdb3a3; padding-bottom: 5px; }
+.home-account-links { position: absolute; top: 50px; right: 135px; z-index: 16; display: flex; align-items: center; gap: 18px; font-family: 'Raleway', sans-serif; font-size: 11px; letter-spacing: .06em; }
+.home-account-links a { color: #fff; }
+.home-admin-login { padding: 11px 16px; border: 1px solid rgba(255,255,255,.6); border-radius: 24px; background: rgba(0,0,0,.18); }
+.home-admin-login:hover, .home-admin-login:focus-visible { background: rgba(0,0,0,.45); color: #fff; }
+.home-admin-login .ion-person { margin-right: 6px; }
+.home-family-login { border-bottom: 1px solid rgba(255,255,255,.6); padding-bottom: 3px; }
+.nav-menu-links .menu-account-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 22px; margin-top: 14px; }
+.nav-menu-links .menu-account-links a { font-size: 14px; line-height: 1.6; letter-spacing: .04em; }
+@media(max-width:880px) { .home-account-links { top: 28px; right: 100px; gap: 12px; } }
+@media(max-width:540px) { .home-account-links { top: 92px; right: 25px; left: 25px; justify-content: flex-end; font-size: 10px; } .home-admin-login { padding: 9px 13px; } }
+@media(max-width:880px) { .diary-links { margin-left:25px; margin-right:25px; } }

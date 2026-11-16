@@ -1,0 +1,11 @@
+dist/
+node_modules/
+.firebase/
+.wrangler/
+.vercel/
+.dev.vars
+.env*
+!.env.example
+worker/secrets.generated.json
+worker/wrangler.generated.json
+*service-account*.json

@@ -25,11 +25,13 @@ $(function() {
     "use strict";
 	
 	
-	$(window).on("load", function() {
+	function finishWeddingLoading() {
 		// 1. preloader
 		$("#preloader").fadeOut(600);
 		$(".preloader-bg").delay(400).fadeOut(600);
-    });
+    }
+    if (document.readyState === "complete") finishWeddingLoading();
+    else $(window).on("load", finishWeddingLoading);
 	
     // 2. navigation
     $(".page-scroll").on("click", function(e) {
@@ -444,115 +446,11 @@ $(function() {
 
 // 11. the Wall
 window.addEvent("domready", function() {
-    var imagewall = [
-        ["img/heroimgs/web/img1.jpg", [
-            ["img/heroimgs/web/img1.jpg", "Photography<br \/>\r\nFashion"]
-        ]],
-        ["img/heroimgs/web/img3.jpg", [
-            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
-        ]],
-        ["img/heroimgs/web/img4.jpg", [
-            ["the-wall/3.jpg", "Item Name<br \/>\r\nLife / Stories"]
-        ]],
-        ["img/heroimgs/web/img5.jpg", [
-            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
-        ]],
-        ["img/heroimgs/web/img6.jpg", [
-            ["the-wall/5.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
-        ]],
-        ["img/heroimgs/web/img7.jpg", [
-            ["the-wall/6.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
-        ]],
-        ["img/heroimgs/web/img8.jpg", [
-            ["the-wall/7.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
-        ]],
-        ["img/heroimgs/web/img9.jpg", [
-            ["the-wall/8.jpg", "Item Name<br \/>\r\nLife / Stories"]
-        ]],
-        ["img/heroimgs/web/img10.jpg", [
-            ["the-wall/9.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
-        ]],
-        ["img/heroimgs/web/img11.jpg", [
-            ["the-wall/10.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
-        ]],
-        ["img/heroimgs/web/img12.jpg", [
-            ["the-wall/11.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
-        ]],
-        ["img/heroimgs/web/img13.jpg", [
-            ["the-wall/12.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
-        ]],
-        ["img/heroimgs/web/img14.jpg", [
-            ["img/heroimgs/web/img14.jpg", "Item Name<br \/>\r\nLife / Stories"],
-            ["the-wall/13-3.jpg", "Item Name 2<br \/>\r\nLife / Stories"],
-            ["the-wall/13-4.jpg", "Item Name 3<br \/>\r\nLife / Stories"]
-        ]],
-        ["img/heroimgs/web/img15.jpg", [
-            ["the-wall/14.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
-        ]],
-        ["img/heroimgs/web/img16.jpg", [
-            ["the-wall/15.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
-        ]],
-        // Repeat cycle starts
-        ["img/heroimgs/web/img1.jpg", [
-            ["img/heroimgs/web/img1.jpg", "Photography<br \/>\r\nFashion"]
-        ]],
-        ["img/heroimgs/web/img3.jpg", [
-            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
-        ]],
-        ["img/heroimgs/web/img4.jpg", [
-            ["the-wall/3.jpg", "Item Name<br \/>\r\nLife / Stories"]
-        ]],
-        ["img/heroimgs/web/img5.jpg", [
-            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
-        ]],
-        ["img/heroimgs/web/img6.jpg", [
-            ["the-wall/5.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
-        ]],
-        ["img/heroimgs/web/img7.jpg", [
-            ["the-wall/6.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
-        ]],
-        ["img/heroimgs/web/img8.jpg", [
-            ["the-wall/7.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
-        ]],
-        ["img/heroimgs/web/img9.jpg", [
-            ["the-wall/8.jpg", "Item Name<br \/>\r\nLife / Stories"]
-        ]],
-        ["img/heroimgs/web/img10.jpg", [
-            ["the-wall/9.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
-        ]],
-        ["img/heroimgs/web/img11.jpg", [
-            ["the-wall/10.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
-        ]],
-        ["img/heroimgs/web/img12.jpg", [
-            ["the-wall/11.jpg", "Item Name<br \/>\r\nCommercial / Stock"]
-        ]],
-        ["img/heroimgs/web/img13.jpg", [
-            ["the-wall/12.jpg", "Item Name<br \/>\r\nBeauty / Fashion"]
-        ]],
-        ["img/heroimgs/web/img14.jpg", [
-            ["img/heroimgs/web/img14.jpg", "Item Name<br \/>\r\nLife / Stories"],
-            ["the-wall/13-3.jpg", "Item Name 2<br \/>\r\nLife / Stories"],
-            ["the-wall/13-4.jpg", "Item Name 3<br \/>\r\nLife / Stories"]
-        ]],
-        ["img/heroimgs/web/img15.jpg", [
-            ["the-wall/14.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
-        ]],
-        ["img/heroimgs/web/img1.jpg", [
-            ["img/heroimgs/web/img1.jpg", "Photography<br \/>\r\nFashion"]
-        ]],
-        ["img/heroimgs/web/img3.jpg", [
-            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
-        ]],
-        ["img/heroimgs/web/img4.jpg", [
-            ["the-wall/3.jpg", "Item Name<br \/>\r\nLife / Stories"]
-        ]],
-        ["img/heroimgs/web/img5.jpg", [
-            ["the-wall/4.jpg", "Item Name<br \/>\r\nPeople / Portraits"]
-        ]],
-        ["img/heroimgs/web/img6.jpg", [
-            ["the-wall/5.jpg", "Item Name<br \/>\r\nEditorials / Magazines"]
-        ]]
-    ];
+    var wallPhotos = window.WEDDING.photos.length ? window.WEDDING.photos : window.WEDDING.placeholders;
+    var imagewall = Array.from({length: 36}, function(_, i) {
+        var photo = wallPhotos[i % wallPhotos.length];
+        return [photo.thumbnail || photo.src, [[photo.src, photo.caption || "Tarun &amp; Shelu"]]];
+    });
     var maxLength = imagewall.length;
     var wallFluid = new Wall("wall", {
         "draggable": true,
@@ -596,7 +494,7 @@ window.addEvent("domready", function() {
                         return;
                     }
                     // create image element safely and force it to fit the card
-                    var img = new Element('img', { src: file });
+                    var img = new Element('img', { src: file, alt: '', 'aria-hidden': 'true' });
                     // ensure the item node hides overflow so images don't resize the card
                     try { items[i].node.setStyle('overflow', 'hidden'); } catch (e) {}
                     // apply styles so image fills the item without affecting layout

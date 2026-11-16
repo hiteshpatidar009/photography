@@ -1,17 +1,4 @@
-﻿<?php
-
-$myemail = 'Varundubeyphotography@gmail.com';
-
-$name    = $_POST['name'];
-$email   = $_POST['email'];
-$subject = $_POST['subject'];
-$message = $_POST['message'];
-
-$to            = $myemail;
-$email_subject = "$subject";
-$email_body    = "\n Name: $name \n Email: $email \n Subject: $subject \n Message: \n $message";
-$headers       = "From: $email";
- 
-mail($to, $email_subject, $email_body, $headers);
-
-?>
+<?php
+http_response_code(503);
+header('Content-Type: application/json');
+echo json_encode(['error' => 'RSVP is not configured. Please use the wedding invitation page for updates.']);

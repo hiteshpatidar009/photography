@@ -1,40 +1,17 @@
 // Dynamic works data
-const imageList = [
-    {src: 'img/heroimgs/img1.jpg'},
-    {src: 'img/heroimgs/img3.JPG'},
-    {src: 'img/heroimgs/img4.JPG'},
-    {src: 'img/heroimgs/img5.JPG'},
-    {src: 'img/heroimgs/img6.JPG'},
-    {src: 'img/heroimgs/img7.jpg'},
-    {src: 'img/heroimgs/img8.jpg'},
-    {src: 'img/heroimgs/img9.jpg'},
-    {src: 'img/heroimgs/img10.jpg'},
-    {src: 'img/heroimgs/img11.jpg'},
-    {src: 'img/heroimgs/img12.jpg'},
-    {src: 'img/heroimgs/img13.jpg'},
-    {src: 'img/heroimgs/img14.jpg'},
-    {src: 'img/heroimgs/img15.JPG'},
-    {src: 'img/heroimgs/img16.JPG'},
-    {src: 'img/new-images/img17.jpg'},
-    {src: 'img/new-images/img18.JPG'},
-    {src: 'img/new-images/img19.jpg'},
-    {src: 'img/new-images/img20.jpg'},
-    {src: 'img/new-images/img21.JPG'},
-    {src: 'img/new-images/img22.JPG'},
-    {src: 'img/new-images/img23.jpg'},
-    {src: 'img/new-images/img24.jpg'},
-    {src: 'img/new-images/img25.jpg'},
-    {src: 'img/new-images/img26.jpg'},
-    {src: 'img/new-images/img27.JPG'},
-    {src: 'img/new-images/img28.JPG'}
-];
+const imageList = window.WEDDING.photos.length ? window.WEDDING.photos : window.WEDDING.placeholders;
 
 let currentPage = 0;
 const imagesPerPage = 12;
 
 // Resized copies made by optimize-images.py: 'web' for thumbnails, 'large' for the full-screen viewer
 function sizedSrc(src, size) {
-    return src.replace(/\/([^\/]+)\.(jpe?g|png)$/i, `/${size}/$1.jpg`);
+    const item = imageList.find(photo => photo.src === src);
+    return (size === 'web' ? item.thumbnail : item.large) || src;
+}
+
+function escapeCaption(value) {
+    return String(value || 'Tarun & Shelu').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
 }
 
 // Generate dynamic CSS for background images
@@ -81,13 +58,13 @@ function generateWorksGrid() {
                             <div class="center-container">
                                 <div class="center-block">
                                     <div class="more-wraper-center item-folio">
-                                        <a class="thumb-link" data-size="1920x1280" href="${sizedSrc(item.src, 'large')}">
+                                        <a class="thumb-link" aria-label="${escapeCaption(item.caption)}" data-size="${item.width || 1200}x${item.height || 800}" href="${sizedSrc(item.src, 'large')}">
                                             <div class="more-button-bg-center more-button-circle"></div>
                                             <div class="more-button-txt-center">
                                                 <span>View</span>
                                             </div>
                                         </a>
-                                        <div class="item-folio__caption">Lorem Ipsum is simply dummy text.</div>
+                                        <div class="item-folio__caption">${escapeCaption(item.caption)}</div>
                                     </div>
                                 </div>
                             </div>
@@ -120,13 +97,13 @@ function generateCarousel() {
                 <div class="center-container">
                     <div class="center-block">
                         <div class="more-wraper-center item-folio">
-                            <a class="thumb-link" data-size="1920x1280" href="${sizedSrc(item.src, 'large')}">
+                            <a class="thumb-link" aria-label="${escapeCaption(item.caption)}" data-size="${item.width || 1200}x${item.height || 800}" href="${sizedSrc(item.src, 'large')}">
                                 <div class="more-button-bg-center more-button-circle"></div>
                                 <div class="more-button-txt-center">
                                     <span>View</span>
                                 </div>
                             </a>
-                            <div class="item-folio__caption">Lorem Ipsum is simply dummy text.</div>
+                            <div class="item-folio__caption">${escapeCaption(item.caption)}</div>
                         </div>
                     </div>
                 </div>
@@ -139,9 +116,28 @@ function generateCarousel() {
 
 // Initialize dynamic works
 function initDynamicWorks() {
+    document.querySelector('.owl-nav-custom-works').hidden = imageList.length <= imagesPerPage;
+    if (window.WEDDING.photos.length) document.getElementById('gallery-note').textContent = 'Our beautiful moments, gathered with love.';
     generateDynamicCSS();
     generateWorksGrid();
     generateCarousel();
+
+    // The template binds PhotoSwipe only once. Resolve the current page on each
+    // click so dynamically replaced pages retain the same viewer and transitions.
+    const grid = document.querySelector('.works-grid');
+    grid.addEventListener('click', function(event) {
+        const link = event.target.closest('.thumb-link');
+        if (!link) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        const links = Array.from(grid.querySelectorAll('.thumb-link'));
+        const items = links.map(anchor => {
+            const size = anchor.dataset.size.split('x').map(Number);
+            return {src: anchor.href, w: size[0], h: size[1], title: anchor.parentElement.querySelector('.item-folio__caption').innerHTML};
+        });
+        new PhotoSwipe(document.querySelector('.pswp'), PhotoSwipeUI_Default, items,
+            {index: links.indexOf(link), showHideOpacity: true}).init();
+    }, true);
     
     // Connect navigation to grid pagination
     $('.owl-next').click(function() {
@@ -161,4 +157,5 @@ function initDynamicWorks() {
 }
 
 // Run when DOM is loaded
-document.addEventListener('DOMContentLoaded', initDynamicWorks);
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDynamicWorks);
+else initDynamicWorks();
