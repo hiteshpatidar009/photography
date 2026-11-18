@@ -10,6 +10,9 @@ async function run(action, button) { if (button) button.disabled = true; try { r
 function setView(name) {
     if (['settings','people','archive','banner'].includes(name) && profile?.role !== 'admin') return;
     activeView = name;
+    document.body.classList.remove('mobile-menu-open');
+    $('#mobile-more')?.setAttribute('aria-expanded','false');
+    document.querySelectorAll('[data-view]').forEach(el=>{if(el.dataset.view===name)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');});
     document.querySelectorAll('[data-panel]').forEach(el => el.hidden = el.dataset.panel !== name);
     document.querySelectorAll('[data-view]').forEach(el => el.classList.toggle('active', el.dataset.view === name));
     if (name === 'settings') renderSettings();
@@ -146,15 +149,6 @@ async function downloadAlbum(date,batch) {
     notice(failures.length?`${failures.length} photo(s) could not be downloaded, possibly due to image-host restrictions. Their URLs are included in the ZIP for manual download.`:'Photo ZIP downloaded.',failures.length>0);
 }
 $('#export').onclick=event=>run(async()=>{await refresh();saveJSON('wedding-records-'+indiaDay()+'.json',{exportedAt:new Date().toISOString(),settings,photos,albums,users,audit});notice('Records exported. Download photo ZIPs separately for an image backup.');},event.target);
-await run(async()=>{
-    await initializeAuth(async user=>{
-        $('#workspace').hidden=true;$('#login-panel').hidden=!(!user);$('#signout').hidden=!user;
-        if(!user){profile=null;$('#identity').textContent='Family access';$('#login-panel').hidden=false;return;}
-        try{await refresh();$('#login-panel').hidden=true;$('#workspace').hidden=false;setView(activeView);}
-        catch(error){$('#login-panel').hidden=false;$('#resend-verification').hidden=demoMode || user.emailVerified !== false;$('#login-signout').hidden=false;notice(error.message,true);}
-    });
-    ['#email-login','#google-login','#register','#reset-password'].forEach(selector=>$(selector).disabled=false);
-});
 
 let bannerDraft = [];
 function bannerEligible(photo) { return photo.status === 'published' && !albums.some(a => a.date === photo.date && a.archived); }
@@ -177,7 +171,7 @@ function updateBannerPreview() {
     const preview = $('#banner-preview'), form = $('#banner-form');
     const chosen = bannerDraft.map(id => photos.find(p => p.id === id)).filter(p => p && bannerEligible(p));
     const sources = chosen.length ? chosen : settings.heroPhoto && !bannerDraft.length ? [{src:settings.heroPhoto}] : window.WEDDING.placeholders;
-    preview.innerHTML = `<div class="banner-preview-grid">${Array.from({length:10},(_,i) => `<img src="${esc(sources[i%sources.length].src)}" alt="">`).join('')}</div><div class="banner-preview-shade"></div><div class="banner-preview-copy"><small>${esc(form.elements.bannerKicker.value)}</small><h2>${esc(settings.coupleNames)}</h2><h3>${esc(settings.headline)}</h3></div>`;
+    preview.innerHTML = `<div class="banner-preview-grid">${Array.from({length:10},(_,i)=>`<img src="${esc(sources[i%sources.length].src)}" alt="">`).join('')}</div><div class="banner-preview-shade"></div><div class="banner-preview-copy"><small>${esc(form.elements.bannerKicker.value)}</small><h2>${esc(settings.coupleNames)}</h2><h3>${esc(settings.headline)}</h3></div>`;
     preview.querySelector('.banner-preview-shade').style.backgroundColor = `rgba(0,0,0,${Number(form.elements.bannerOverlay.value)/100})`;
     preview.classList.toggle('animated', form.elements.bannerMotion.checked);
 }
@@ -232,3 +226,13 @@ $('#banner-upload').onclick = event => run(async()=>{
         notice(count + ' photo(s) uploaded and saved to homepage banner!');
     } finally { saveButton.disabled = false; }
 },event.target);
+
+await run(async()=>{
+    await initializeAuth(async user=>{
+        $('#mobile-studio-nav').hidden=true;$('#workspace').hidden=true;$('#login-panel').hidden=!(!user);$('#signout').hidden=!user;
+        if(!user){profile=null;$('#identity').textContent='Family access';$('#login-panel').hidden=false;return;}
+        try{await refresh();$('#login-panel').hidden=true;$('#workspace').hidden=false;$('#mobile-studio-nav').hidden=false;setView(activeView);}
+        catch(error){$('#login-panel').hidden=false;$('#resend-verification').hidden=demoMode || user.emailVerified !== false;$('#login-signout').hidden=false;notice(error.message,true);}
+    });
+    ['#email-login','#google-login','#register','#reset-password'].forEach(selector=>$(selector).disabled=false);
+});

@@ -179,3 +179,13 @@ Official references:
 Save **Website & events** once before the first upload. The dashboard opens this section automatically when settings are missing. Failed uploads display the reason in the notice; they are not published.
 
 In the photo library, use **Feature** to select photos for **Our Beautiful Moments**, **Use as home background** for the animated homepage background, or **Use as admin background** for the studio. Background URLs can also be edited or cleared in Website & events. Published, unarchived photos appear automatically in **Public Moments** near the bottom of the homepage, with pagination. Daily albums remain on the diary page. Hide a photo or archive its album to remove it from public galleries; clear a background URL separately if that photo was selected as a background.
+
+
+### Dedicated homepage banner editor
+
+Open **Admin ? Homepage banner**. Upload photographs directly (successful uploads are also saved to the banner), or choose existing published photographs from the library. Use **Earlier / Later** to arrange them, **Remove** to remove a selection, then **Save banner**. The collage supports up to 24 selected photographs; this is not a daily upload cap. Hidden photos and archived albums are excluded automatically.
+
+The section includes an animated preview, overlay darkness, motion toggle, small heading and celebrations-link text. Couple names, headline, welcome text, events, story, contact and RSVP details remain under **Website & events**. **Feature** in the library controls Our Beautiful Moments; ordinary published uploads appear in Public Moments and the diary. Open **Preview homepage** after saving. Browser reduced-motion preferences override banner animation.
+
+
+The homepage now uses the original connected Wall animation, matched to the supplied recording: drag the entire background in any direction, release to glide, and keep all headings fixed. Individual tiles are not reordered. The admin thumbnail preview shows the selected photos; use Preview homepage to test full wall dragging.

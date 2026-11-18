@@ -69,3 +69,18 @@ test('more than ten uploads in one day succeed even with obsolete zero limits',a
     }
     assert.equal([...records.keys()].some(key=>key.startsWith('quotas/')),false);
 });
+
+test('homepage banner preserves admin order and excludes hidden, archived and missing photos',async()=>{
+    const ids=['b','c','d','e','f'].map(x=>x.repeat(64));
+    for(let i=0;i<4;i++) records.set('photos/'+ids[i],{id:ids[i],status:i===2?'hidden':'published',date:i===3?'2026-10-01':'2026-11-01',src:'https://i.ibb.co/banner.jpg',owner:'private',deleteUrl:'private'});
+    records.set('albums/2026-10-01',{date:'2026-10-01',archived:true});
+    const body={startDate:'2027-02-08',events:[],bannerPhotoIds:[ids[1],ids[0],ids[2],ids[3],ids[4]],bannerMotion:false,bannerOverlay:50};
+    assert.equal((await call('/admin/settings',{token:'bride',body})).status,403);
+    assert.equal((await call('/admin/settings',{token:'root',body})).status,200);
+    const home=(await call('/public?home=1')).data;
+    assert.deepEqual(home.banner.map(p=>p.id),[ids[1],ids[0]]);
+    assert.equal(home.banner[0].owner,undefined);
+    assert.equal(home.banner[0].deleteUrl,undefined);
+    assert.equal(home.settings.bannerMotion,false);
+    assert.deepEqual((await call('/public')).data.banner,[]);
+});

@@ -446,15 +446,9 @@ $(function() {
 
 // 11. the Wall
 function initializeWeddingWall(force) {
-    if (document.getElementById("hero-photo-grid")) {
-        if (typeof window.renderHeroBoxGrid === 'function') {
-            window.renderHeroBoxGrid(window.WEDDING && window.WEDDING.backgroundPhotos);
-        }
-        return;
-    }
     if (window._wallInitialized && !force) return;
     var wallEl = document.getElementById("wall");
-    if (!wallEl) return;
+    if (!wallEl || wallEl.dataset.nativeCollage === "true") return;
     if (force) {
         if (window._wallDriftRaf) {
             cancelAnimationFrame(window._wallDriftRaf);
@@ -610,7 +604,7 @@ function initializeWeddingWall(force) {
                         // add it via style property if available
                         try { img.style.objectFit = 'cover'; } catch (e) {}
                     } catch (e) {}
-                    img.inject(items[i].node).fade("hide").fade("in");
+                    img.inject(items[i].node);
                     var list = new Element("ul");
                     list.setProperty("class", "slideshow")
                     for (var j = 0; j < imagewall[position][1].length; j++) {

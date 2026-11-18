@@ -1,0 +1,78 @@
+/* Shared mobile navigation and layout; desktop retains the existing design. */
+.mobile-bottom-nav {display:none;}
+@media(max-width:767px){
+    :root {--mobile-nav-height:68px;--mobile-bottom:calc(var(--mobile-nav-height) + env(safe-area-inset-bottom,0px));}
+    html {scroll-padding-bottom:calc(var(--mobile-bottom) + 20px);}
+    body {padding-bottom:var(--mobile-bottom);overflow-x:clip;}
+    *,*::before,*::after {box-sizing:border-box;}
+    input,select,textarea {font-size:16px!important;max-width:100%;}
+    button,input,select {min-height:44px;}
+    textarea {min-height:100px;}
+    a,button {-webkit-tap-highlight-color:rgba(173,148,110,.2);touch-action:manipulation;}
+    :focus-visible {outline:2px solid #8d6941;outline-offset:3px;}
+    .mobile-bottom-nav {position:fixed;bottom:0;left:0;right:0;z-index:1000;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));height:var(--mobile-bottom);padding:6px max(8px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));background:#fffefbf7;border-top:1px solid #e4ddd3;box-shadow:0 -4px 22px #0000000a;backdrop-filter:blur(14px);}
+    .mobile-bottom-nav[hidden] {display:none!important;}
+    .mobile-bottom-nav a,.mobile-bottom-nav button {display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;padding:5px 2px;border:0;border-radius:12px;background:transparent;color:#625b53;font:600 10px/1.2 'Raleway',sans-serif;letter-spacing:.01em;text-decoration:none;}
+    .mobile-bottom-nav svg {width:22px;height:22px;}
+    .mobile-bottom-nav [aria-current],.mobile-bottom-nav [aria-expanded=true] {color:#725337;background:#efe8dd;}
+    .mobile-invitation .home-section,.mobile-invitation .hero-fullscreen {height:calc(100svh - var(--mobile-bottom))!important;min-height:560px!important;}
+    .mobile-invitation .home-account-links {display:none;}
+    .mobile-invitation .intro {left:22px;right:22px;bottom:105px;max-width:none;}
+    .mobile-invitation .intro-title {font-size:clamp(40px,11vw,64px)!important;line-height:1.1!important;letter-spacing:-1px!important;overflow-wrap:break-word;}
+    .mobile-invitation .wedding-heading {font-size:clamp(24px,6.5vw,36px)!important;line-height:1.2!important;letter-spacing:0!important;}
+    .mobile-invitation .intro-subtitle {font-size:12px!important;line-height:1.5!important;}
+    .mobile-invitation .intro .divider-s {height:18px!important;}
+    .mobile-invitation .wedding-hero-link {display:inline-flex;align-items:center;min-height:46px;max-width:100%;padding:12px 18px;margin-top:18px;font-size:10px;}
+    .mobile-invitation .bottom-credits {left:22px!important;bottom:26px!important;font-size:9px!important;max-width:calc(100% - 44px);}
+    .mobile-invitation .logo {left:22px!important;top:25px!important;}
+    .mobile-invitation .round-menu {right:18px!important;top:25px!important;}
+    .mobile-invitation .to-top-arrow {bottom:calc(var(--mobile-bottom) + 15px)!important;}
+    .mobile-invitation .gallery-note,.mobile-invitation .diary-links {margin-left:22px;margin-right:22px;}
+    .mobile-invitation .public-moments {padding:55px 20px;}
+    .public-photo-grid {gap:12px;}
+    .public-photo-grid span {font-size:12px;}
+    .public-actions a,.diary-links a {min-height:44px;display:inline-flex;align-items:center;}
+    .wedding-event .inner-spacer {padding-left:0;padding-right:0;}
+    .section-txt,.photo-info,.person-row,.notice {overflow-wrap:anywhere;}
+    .mobile-studio .studio-shell {display:block;min-height:calc(100svh - var(--mobile-bottom));}
+    .mobile-studio .sidebar {padding:20px;border-bottom:1px solid var(--line);}
+    .mobile-studio .sidebar nav {display:none;}
+    .mobile-studio.mobile-menu-open .sidebar nav {display:grid;grid-template-columns:1fr 1fr;position:fixed;bottom:calc(var(--mobile-bottom) + 10px);left:12px;right:12px;z-index:1001;max-height:65svh;overflow-y:auto;padding:14px;background:#fffefb;box-shadow:0 -8px 50px #0003;border:1px solid var(--line);border-radius:18px;}
+    .mobile-studio .sidebar .nav-item {min-width:0;white-space:normal;text-align:left;min-height:48px;}
+    .mobile-studio .sidebar-bottom {margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;}
+    .mobile-studio .sidebar-bottom a,.mobile-studio .sidebar-bottom button {min-height:36px;display:inline-flex;align-items:center;}
+    .mobile-studio .studio-main {padding:0 16px 30px;min-width:0;}
+    .mobile-studio .topbar {gap:12px;font-size:9px;flex-wrap:wrap;}
+    .mobile-studio .page-heading {margin:26px 0;}
+    .mobile-studio h1 {font-size:36px;letter-spacing:-.5px;}
+    .mobile-studio .panel {padding:18px;min-width:0;}
+    .mobile-studio .login-panel {padding:24px 0!important;}
+    .mobile-studio .login-card {margin-top:24px;}
+    .mobile-studio .login-panel h1 {font-size:38px;}
+    .mobile-studio .form-grid,.mobile-studio .album-grid {grid-template-columns:1fr;}
+    .mobile-studio .photo-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+    .mobile-studio .card-actions {display:flex;flex-direction:column;align-items:stretch;gap:4px;}
+    .mobile-studio .card-actions button,.mobile-studio .card-actions a {min-height:44px;text-align:left;}
+    .mobile-studio .person-row {grid-template-columns:1fr;}
+    .mobile-studio .save-bar {position:static;flex-direction:column;align-items:stretch;padding:16px 0;}
+    .mobile-studio .save-bar button {width:100%;}
+    .mobile-studio .dropzone {padding:24px 12px;}
+    .mobile-studio .banner-preview {min-height:240px;}
+    .mobile-studio .banner-preview-copy {padding:45px 16px 20px;}
+    .mobile-studio .banner-preview-copy h2 {font-size:30px;}
+    .mobile-studio .banner-preview-copy h3 {font-size:19px;}
+    .mobile-diary .diary-header {padding:20px;}
+    .mobile-diary .diary-header nav {display:none;}
+    .mobile-diary .diary-main {padding:32px 18px;}
+    .mobile-diary .filters {display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .mobile-diary .filters label {min-width:0;}
+    .mobile-diary .filters select {width:100%;}
+    dialog {max-width:calc(100vw - 20px);max-height:calc(100dvh - 32px);overflow-y:auto;padding:46px 14px 20px;}
+    dialog img {max-width:100%;max-height:60dvh;}
+    .dialog-close {width:44px;height:44px;right:4px;top:4px;}
+    .slideshow-controls {gap:8px;}
+    .slideshow-controls button {min-width:44px;min-height:44px;}
+}
+@media(max-width:360px){.mobile-studio .photo-grid {grid-template-columns:1fr;}.mobile-diary .filters {grid-template-columns:1fr;}}
+@media(max-width:767px) and (orientation:landscape){.mobile-invitation .home-section,.mobile-invitation .hero-fullscreen{min-height:480px!important;}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important;}}

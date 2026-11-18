@@ -37,3 +37,16 @@ test('ZIP export contains readable local and central entries',async()=>{
     const buffer=await zip.arrayBuffer(),view=new DataView(buffer);
     assert.equal(view.getUint32(0,true),0x04034b50);assert.equal(view.getUint32(buffer.byteLength-22,true),0x06054b50);assert.equal(view.getUint16(buffer.byteLength-14,true),1);
 });
+
+test('banner settings preserve order, deduplicate IDs and validate shading',()=>{
+    const base={startDate:'2027-02-08',events:[]};
+    const a='a'.repeat(64), b='b'.repeat(64);
+    const settings=validateSettings({...base,bannerPhotoIds:[b,a,b],bannerMotion:false,bannerOverlay:55});
+    assert.deepEqual(settings.bannerPhotoIds,[b,a]);
+    assert.equal(settings.bannerMotion,false);
+    assert.equal(settings.bannerOverlay,55);
+    assert.equal(validateSettings(base).bannerMotion,true);
+    assert.throws(()=>validateSettings({...base,bannerPhotoIds:['../users/admin']}),/banner photos/);
+    assert.throws(()=>validateSettings({...base,bannerPhotoIds:Array(25).fill(a)}),/banner photos/);
+    assert.throws(()=>validateSettings({...base,bannerOverlay:100}),/shading/);
+});

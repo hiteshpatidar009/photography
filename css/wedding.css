@@ -352,3 +352,5 @@ a:focus-visible, [role="button"]:focus-visible { outline: 2px solid #ad946e; out
 .public-actions a {border-bottom:1px solid #ad946e;padding-bottom:6px;}
 #more-public-photos {padding:12px 25px;background:transparent;border:1px solid #ad946e;}
 @media(max-width:767px){.public-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;}.public-moments{padding:60px 25px;}}
+
+@media (prefers-reduced-motion: reduce) { .hero-box-grid.animated { animation: none !important; } }
