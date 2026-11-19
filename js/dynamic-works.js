@@ -118,7 +118,7 @@ function generateCarousel() {
 function initDynamicWorks() {
     document.querySelector('.owl-nav-custom-works').hidden = imageList.length <= imagesPerPage;
     if (window.WEDDING.photos.length) document.getElementById('gallery-note').textContent = 'Our beautiful moments, gathered with love.';
-    if (!imageList.length) { document.getElementById('gallery-note').textContent = 'Our favourite photographs will appear here soon.'; return; }
+    if (!imageList.length) { document.getElementById('gallery-note').textContent = 'A little space for the memories we will make together.'; document.querySelector('.works-grid').innerHTML = '<div class="gallery-keepsake"><img src="img/wedding/haldi.svg" alt="Decorative wedding illustration" loading="lazy"><p>The colours, the laughter, the little moments.<br>Our favourite photographs will be gathered here.</p></div>'; return; }
     generateDynamicCSS();
     generateWorksGrid();
     generateCarousel();

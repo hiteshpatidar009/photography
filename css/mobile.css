@@ -76,3 +76,22 @@
 @media(max-width:360px){.mobile-studio .photo-grid {grid-template-columns:1fr;}.mobile-diary .filters {grid-template-columns:1fr;}}
 @media(max-width:767px) and (orientation:landscape){.mobile-invitation .home-section,.mobile-invitation .hero-fullscreen{min-height:480px!important;}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important;}}
+
+/* Mobile invitation hero: quieter photo wall, clear type and one primary action. */
+@media(max-width:767px){
+    .mobile-invitation .overlay-home-wall::after {content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,12,10,.38) 0%,transparent 25%,rgba(8,12,10,.2) 42%,rgba(8,12,10,.87) 78%,#080c0af5 100%);}
+    .mobile-invitation .intro {bottom:80px;left:24px;right:24px;display:flex;flex-direction:column;align-items:flex-start;gap:16px;}
+    .mobile-invitation .intro .divider-s,.mobile-invitation .intro .divider-s-2 {display:none!important;}
+    .mobile-invitation .intro-subtitle {font-family:'Raleway',sans-serif;font-size:10px!important;font-weight:600;letter-spacing:.16em!important;text-transform:uppercase;line-height:1.6!important;color:#e9dfcd;max-width:100%;}
+    .mobile-invitation .intro-title {font-size:clamp(38px,11.5vw,60px)!important;font-weight:400;line-height:1.08!important;letter-spacing:-.04em!important;text-shadow:0 2px 20px #0003;margin:0;}
+    .mobile-invitation .wedding-heading {font-family:'Raleway',sans-serif;font-size:clamp(16px,4.8vw,22px)!important;font-weight:500;line-height:1.5!important;text-transform:none!important;letter-spacing:0!important;max-width:310px;text-wrap:balance;color:#f4f1eb;}
+    .mobile-invitation .intro > div:last-child {width:100%;margin-top:8px;}
+    .mobile-invitation .wedding-hero-link {display:flex!important;align-items:center;justify-content:center;min-height:50px;width:100%;max-width:340px;padding:15px 18px!important;margin-top:0!important;border:1px solid #e6d6ba!important;border-radius:12px!important;background:#f0e4ce;color:#302a21!important;font-family:'Raleway',sans-serif;font-size:10px!important;font-weight:700;letter-spacing:.09em!important;line-height:1.5;text-align:center;box-shadow:0 6px 24px #0002;}
+    .mobile-invitation .wedding-hero-link:active {background:#dfcaa6;transform:translateY(1px);}
+    .mobile-invitation .bottom-credits {left:24px!important;bottom:28px!important;font-family:'Raleway',sans-serif;font-size:8px!important;line-height:1.6;letter-spacing:.09em;color:#d4cdbc;}
+    .mobile-invitation .logo {left:24px!important;top:28px!important;}
+    .mobile-invitation .round-menu {top:24px!important;right:20px!important;}
+    .mobile-bottom-nav {border-radius:18px 18px 0 0;box-shadow:0 -5px 25px #00000014;}
+    .mobile-bottom-nav [aria-current] {background:#f1e9dc;color:#705538;}
+}
+@media(max-width:360px){.mobile-invitation .intro{left:20px;right:20px;gap:13px;bottom:74px;}.mobile-invitation .intro-title{font-size:38px!important;}.mobile-invitation .bottom-credits{left:20px!important;}}

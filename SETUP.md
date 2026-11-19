@@ -189,3 +189,10 @@ The section includes an animated preview, overlay darkness, motion toggle, small
 
 
 The homepage now uses the original connected Wall animation, matched to the supplied recording: drag the entire background in any direction, release to glide, and keep all headings fixed. Individual tiles are not reordered. The admin thumbnail preview shows the selected photos; use Preview homepage to test full wall dragging.
+
+
+### Photo-led wedding website
+
+The homepage keeps the animated collage, then shows couple portraits, compact event cards, a selected gallery, family memories, and venue/contact information. Longer couple introductions are expandable. QR, patrika and print sections are no longer included.
+
+Use Photo library to select groom/bride portraits, a gallery cover and a venue photo. Use **Feature** for the selected gallery. Website & events also accepts an optional HTTPS photograph for each event; otherwise the event uses its decorative illustration. Missing portraits use clearly labelled decorative artwork until the family supplies photos. Public uploads open in an on-page photo viewer; daily albums remain in the diary.

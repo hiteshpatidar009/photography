@@ -21,7 +21,7 @@ export function validateSettings(input) {
     requireValue(input && typeof input === 'object', 'Invalid website settings.');
     const result = {};
     for (const key of ['coupleNames', 'groomName', 'brideName', 'groomBio', 'brideBio', 'headline', 'welcome', 'venue', 'contactName', 'contactPhone', 'rsvpMessage']) result[key] = text(input[key], 1500);
-    for (const key of ['mapUrl', 'rsvpUrl', 'heroPhoto', 'adminBackground', 'musicUrl']) result[key] = httpsUrl(input[key]);
+    for (const key of ['mapUrl', 'rsvpUrl', 'heroPhoto', 'adminBackground', 'musicUrl', 'couplePhoto', 'groomPhoto', 'bridePhoto', 'venuePhoto']) result[key] = httpsUrl(input[key]);
     const bannerIds = input.bannerPhotoIds ?? [];
     requireValue(Array.isArray(bannerIds) && bannerIds.length <= 24 && bannerIds.every(id => typeof id === 'string' && /^[a-f0-9]{64}$/.test(id)), 'Choose up to 24 valid banner photos.');
     result.bannerPhotoIds = [...new Set(bannerIds)];
@@ -37,7 +37,7 @@ export function validateSettings(input) {
     requireValue(Array.isArray(input.events) && input.events.length <= 20, 'Maximum 20 events.');
     result.events = input.events.map(e => {
         requireValue(validDate(e.date) && text(e.name), 'Each event needs a name and valid date.');
-        return {name: text(e.name, 100), hindi: text(e.hindi, 100), date: e.date, theme: text(e.theme), venue: text(e.venue), time: text(e.time, 100), mapUrl: httpsUrl(e.mapUrl), image: ['blessings', 'haldi', 'mehendi', 'ganga', 'sangeet'].includes(e.image) ? e.image : 'blessings'};
+        return {name: text(e.name, 100), hindi: text(e.hindi, 100), date: e.date, theme: text(e.theme), venue: text(e.venue), time: text(e.time, 100), mapUrl: httpsUrl(e.mapUrl), photo: httpsUrl(e.photo), image: ['blessings', 'haldi', 'mehendi', 'ganga', 'sangeet'].includes(e.image) ? e.image : 'blessings'};
     }).sort((a, b) => a.date.localeCompare(b.date));
     return result;
 }

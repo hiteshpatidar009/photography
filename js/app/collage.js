@@ -5,7 +5,9 @@ export function mountCollage(viewport, wall, sources, moving = true) {
     const reduced=matchMedia('(prefers-reduced-motion: reduce)'), tiles=new Map();
     wall.dataset.nativeCollage='true';
     function draw() {
-        const width=Math.max(160,Math.min(301,viewport.clientWidth/4)), height=Math.max(200,Math.min(320,viewport.clientHeight/2));
+        const mobile=viewport.clientWidth<=767;
+        const width=mobile?Math.max(140,Math.min(200,viewport.clientWidth/2.4)):Math.max(160,Math.min(301,viewport.clientWidth/4));
+        const height=mobile?width*1.35:Math.max(200,Math.min(320,viewport.clientHeight/2));
         const startX=Math.floor(-x/width)-1, startY=Math.floor(-y/height)-1, keep=new Set();
         for(let row=startY;row<=startY+Math.ceil(viewport.clientHeight/height)+2;row++) {
             for(let col=startX;col<=startX+Math.ceil(viewport.clientWidth/width)+2;col++) {

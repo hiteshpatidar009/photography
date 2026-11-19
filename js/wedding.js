@@ -10,19 +10,9 @@
         const date = new Date(event.date + 'T12:00:00+05:30');
         const label = date.toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata'});
         const map = safeUrl(event.mapUrl);
-        return `<article class="row wedding-event">
-            <div class="col-sm-3"><div class="inner-spacer">
-                <div class="chart-wrapper event-date-ring"><span class="chart-skills chart-appear-skills" data-percent="100"><span class="percent-skills" aria-hidden="true"></span></span><span class="event-day">${escape(event.date.slice(-2))}<small>${escape(date.toLocaleDateString('en-GB', {month:'short', year:'numeric', timeZone:'Asia/Kolkata'}).toUpperCase())}</small></span></div>
-            </div></div>
-            <div class="col-sm-6"><div class="inner-spacer">
-                <h2 class="section-subheading"><span lang="hi">${escape(event.hindi)}</span></h2><div class="divider-s"></div>
-                <h3 class="post-title post-title-s">${escape(event.name)}</h3><div class="divider-s"></div>
-                <div class="section-txt"><p><time datetime="${escape(event.date)}">${escape(label)}</time></p>
-                <p class="event-theme theme-${escape(event.image)}">Dress code / theme: ${escape(event.theme)}</p>
-                <p>Venue: ${escape(event.venue || 'To be announced')}<br>Time: ${escape(event.time || 'To be announced')}</p>
-                ${map ? `<p><a class="link-effect" href="${escape(map)}" target="_blank" rel="noopener">View directions</a></p>` : ''}</div>
-            </div></div>
-            <div class="col-sm-3"><div class="inner-spacer"><img class="event-illustration" src="img/wedding/${escape(event.image)}.svg" alt="Decorative illustration for ${escape(event.name)}" width="1200" height="800" loading="lazy"></div></div>
+        return `<article class="wedding-event event-${escape(event.image)}">
+            <div class="event-picture"><img src="${escape(event.photo || 'img/wedding/'+event.image+'.svg')}" alt="${event.photo ? escape(event.name) : 'Decorative '+escape(event.name)+' illustration'}" loading="lazy"><time datetime="${escape(event.date)}"><strong>${escape(event.date.slice(-2))}</strong><span>${escape(date.toLocaleDateString('en-GB',{month:'short',year:'numeric'}))}</span></time></div>
+            <div class="event-body"><span class="event-hindi" lang="hi">${escape(event.hindi)}</span><h3>${escape(event.name)}</h3><p class="event-time">${escape(event.time || 'Time to be announced')}</p>${event.theme ? `<span class="dress-tag">${escape(event.theme)}</span>` : ''}<p class="event-venue">${escape(event.venue || 'Venue to be announced')}</p>${map ? `<a href="${escape(map)}" target="_blank" rel="noopener" class="site-text-link">Directions ?</a>` : ''}</div>
         </article>`;
     }).join('');
     document.querySelectorAll('[data-story]').forEach(el => { el.textContent = config.story[el.dataset.story]; });

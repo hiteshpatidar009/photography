@@ -50,3 +50,18 @@ test('banner settings preserve order, deduplicate IDs and validate shading',()=>
     assert.throws(()=>validateSettings({...base,bannerPhotoIds:Array(25).fill(a)}),/banner photos/);
     assert.throws(()=>validateSettings({...base,bannerOverlay:100}),/shading/);
 });
+
+test('wedding photo settings allow HTTPS only',()=>{
+ const base={startDate:'2027-02-08',events:[]};
+ for(const field of ['couplePhoto','groomPhoto','bridePhoto','venuePhoto']){
+  assert.equal(validateSettings({...base,[field]:'https://example.com/invitation'})[field],'https://example.com/invitation');
+  assert.throws(()=>validateSettings({...base,[field]:'javascript:alert(1)'}),/https/);
+ }
+});
+
+test('event photographs survive saving and reject unsafe sources',()=>{
+ const event={name:'Haldi',date:'2027-02-09',photo:'https://i.ibb.co/event.jpg'};
+ const base={startDate:'2027-02-08',events:[event]};
+ assert.equal(validateSettings(base).events[0].photo,event.photo);
+ assert.throws(()=>validateSettings({...base,events:[{...event,photo:'javascript:alert(1)'}]}),/https/);
+});

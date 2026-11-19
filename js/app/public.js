@@ -1,3 +1,4 @@
+import {initializeExperience} from './experience.js';
 import {runtime, demoMode} from './config.js';
 import {api} from './store.js';
 import {mountCollage} from './collage.js';
@@ -10,7 +11,7 @@ function renderPublic(data) {
     for (const photo of data.photos || []) {
         if (seenPhotos.has(photo.id)) continue;
         seenPhotos.add(photo.id);
-        const link = document.createElement('a'); link.href = photo.src; link.target = '_blank'; link.rel = 'noopener';
+        const link = document.createElement('a'); link.href = photo.src; link.dataset.memorySrc=photo.src;link.dataset.memoryCaption=photo.caption||'';
         const image = document.createElement('img'); image.src = photo.thumbnail || photo.src; image.alt = photo.caption || 'A shared wedding memory'; image.loading = 'lazy'; image.decoding = 'async';
         const caption = document.createElement('span'); caption.textContent = photo.caption || photo.date;
         link.append(image, caption); grid.append(link);
@@ -51,9 +52,11 @@ try {
     if (statusEl) statusEl.textContent = 'Memories are temporarily unavailable. Please reload to try again.';
     console.info('Showing the saved invitation while live content is unavailable.');
 }
-for(const src of ['js/wedding.js','js/dynamic-works.js','js/basex-wall.js']){
+for(const src of ['js/wedding.js','js/basex-wall.js']){
     if (document.querySelector(`script[src="${src}"]`)) continue;
     await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=src;script.onload=resolve;script.onerror=reject;document.body.append(script);}).catch(()=>{
         document.querySelector('#preloader').style.display='none';document.querySelector('.preloader-bg').style.display='none';
     });
 }
+
+initializeExperience(window.WEDDING);
